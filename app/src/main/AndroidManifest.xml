@@ -19,9 +19,10 @@
             tools:ignore="GoogleAppIndexingWarning"
             tools:replace="android:allowBackup"
             tools:targetApi="n">
-        <activity android:name=".AddEventActivity"
-                  android:label="编辑事件"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".event_add.AddEventActivity"
+                  android:label="编辑事件"
+                  android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

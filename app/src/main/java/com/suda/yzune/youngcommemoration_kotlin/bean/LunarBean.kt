@@ -5,4 +5,6 @@ data class LunarBean(
     var lunarMonth: Int,
     var lunarDay: Int,
     var isLeap: Boolean
-)
+) {
+    constructor() : this(0, 0, 0, false)
+}

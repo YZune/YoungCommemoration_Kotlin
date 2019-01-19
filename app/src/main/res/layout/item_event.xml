@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:text="咩咩"
+                    android:text="备注"
                     android:textSize="12sp"/>
 
         </LinearLayout>

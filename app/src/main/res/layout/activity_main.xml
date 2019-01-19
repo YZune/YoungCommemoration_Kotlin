@@ -6,7 +6,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.suda.yzune.youngcommemoration_kotlin.MainActivity">
+        tools:context="com.suda.yzune.youngcommemoration_kotlin.main.MainActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"

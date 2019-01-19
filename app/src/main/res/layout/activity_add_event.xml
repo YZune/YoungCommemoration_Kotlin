@@ -8,7 +8,7 @@
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AddEventActivity">
+        tools:context=".event_add.AddEventActivity">
 
     <ScrollView
             android:layout_width="match_parent"
@@ -43,6 +43,7 @@
             <com.google.android.material.chip.ChipGroup
                     android:id="@+id/cg_type"
                     app:singleSelection="true"
+
                     app:chipSpacing="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -51,13 +52,14 @@
                         android:checkable="true"
                         android:textColor="@android:color/white"
                         app:chipBackgroundColor="@color/pink"
-                        android:id="@+id/chip_m"
+                        android:id="@+id/chip_commemoration"
                         android:layout_marginStart="16dp"
                         android:text="纪念日"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
                 <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_birth"
                         android:textColor="@android:color/white"
                         app:chipBackgroundColor="@color/colorAccent"
                         android:checkable="true"
@@ -67,6 +69,7 @@
                         android:layout_height="wrap_content"/>
 
                 <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_lunar_birth"
                         android:textColor="@android:color/white"
                         app:chipBackgroundColor="@color/orange"
                         android:checkable="true"
@@ -76,6 +79,7 @@
                         android:layout_height="wrap_content"/>
 
                 <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_rest"
                         android:textColor="@android:color/white"
                         app:chipBackgroundColor="@color/red"
                         android:checkable="true"
@@ -87,7 +91,8 @@
             </com.google.android.material.chip.ChipGroup>
 
             <View
-                    android:alpha="0.6"
+                    android:layout_marginBottom="8dp"
+                    android:alpha="0.5"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="16dp"
@@ -96,24 +101,24 @@
                     android:layout_height="1dp"/>
 
             <LinearLayout
-                    android:id="@+id/ll_event"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:background="?android:attr/selectableItemBackground">
+                    android:layout_height="64dp">
 
                 <TextView
+                        android:id="@+id/tv_event_icon"
                         style="@style/IconTextViewStyle"
                         android:layout_width="56dp"
                         android:layout_height="match_parent"
                         android:text=""
-                        android:textColor="#1571D5"/>
+                        android:textColor="@color/blue"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_event"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="24dp"
                         android:background="@null"
+                        android:singleLine="true"
                         android:gravity="center_vertical"
                         android:hint="寿星"
                         android:lines="1"
@@ -121,10 +126,10 @@
             </LinearLayout>
 
             <LinearLayout
+                    android:background="@drawable/custom_ripple"
                     android:id="@+id/ll_date"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:background="?android:attr/selectableItemBackground">
+                    android:layout_height="64dp">
 
                 <TextView
                         style="@style/IconTextViewStyle"
@@ -172,10 +177,8 @@
             </LinearLayout>
 
             <LinearLayout
-                    android:id="@+id/ll_msg"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:background="?android:attr/selectableItemBackground">
+                    android:layout_height="64dp">
 
                 <TextView
                         style="@style/IconTextViewStyle"
@@ -184,7 +187,7 @@
                         android:text=""
                         android:textColor="@color/lightBlue"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_msg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -197,10 +200,10 @@
             </LinearLayout>
 
             <LinearLayout
-                    android:id="@+id/ll_top"
+                    android:id="@+id/ll_fav"
+                    android:background="@drawable/custom_ripple"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:background="?android:attr/selectableItemBackground">
+                    android:layout_height="64dp">
 
                 <TextView
                         style="@style/IconTextViewStyle"
@@ -221,6 +224,7 @@
                         android:textSize="14sp"/>
 
                 <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/s_fav"
                         android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>

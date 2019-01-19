@@ -15,4 +15,13 @@
         <item name="android:fontFamily">@font/iconfont</item>
     </style>
 
+    <style name="DialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="cornerRadius">8dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
 </resources>
