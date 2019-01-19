@@ -1,10 +1,12 @@
 package com.suda.yzune.youngcommemoration_kotlin.bean
 
+import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.text.ParseException
 import java.util.*
 
+@Entity
 data class EventBean(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
@@ -19,6 +21,18 @@ data class EventBean(
     @Ignore
     var count: Int = 0
 ) {
+    constructor(
+        id: Int,
+        content: String,
+        year: Int,
+        month: Int,
+        day: Int,
+        type: Int,
+        path: String,
+        isFav: Boolean,
+        msg: String
+    ) : this(id, content, year, month, day, type, path, isFav, msg, 0)
+
     fun getDescriptionWithDays(): String {
         val description = ""
         when (type) {
