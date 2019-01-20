@@ -5,22 +5,15 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.graphics.Typeface
 import android.os.Build
-import androidx.multidex.MultiDex
 import com.crashlytics.android.Crashlytics
 import com.suda.yzune.youngcommemoration_kotlin.utils.PreferenceUtils
-import es.dmoral.toasty.Toasty
 import io.fabric.sdk.android.Fabric
 
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Toasty.Config.getInstance()
-            .setToastTypeface(Typeface.DEFAULT_BOLD)
-            .setTextSize(12)
-            .apply()
         if (!BuildConfig.DEBUG && !Fabric.isInitialized()) {
             Fabric.with(this, Crashlytics())
         }
@@ -43,10 +36,5 @@ class App : Application() {
         channel.setShowBadge(true)
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
-    }
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        MultiDex.install(this)
     }
 }
