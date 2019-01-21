@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:minWidth="40dp"
+                    android:minHeight="40dp"
+                    android:updatePeriodMillis="14400000"
+                    android:previewImage="@drawable/example_appwidget_preview"
+                    android:initialLayout="@layout/event_app_widget"
+                    android:configure="com.suda.yzune.youngcommemoration.event_appwidget.EventAppWidgetConfigureActivity"
+                    android:resizeMode="horizontal|vertical"
+                    android:widgetCategory="home_screen"
+                    android:initialKeyguardLayout="@layout/event_app_widget">
+</appwidget-provider>

@@ -2,7 +2,7 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="280dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="320dp"
         android:orientation="vertical"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
@@ -19,6 +19,8 @@
 
     <cn.carbs.android.gregorianlunarcalendar.library.view.GregorianLunarCalendarView
             android:id="@+id/calendar_view"
+            app:glcv_GregorianThemeColor="@color/blue_600"
+            app:glcv_LunarThemeColor="@color/blue_600"
             android:layout_width="match_parent"
             android:layout_height="160dp"/>
 
@@ -26,14 +28,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
+        <android.support.design.button.MaterialButton
                 android:id="@+id/btn_cancel"
                 style="@style/DialogButtonStyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="取消"/>
 
-        <com.google.android.material.button.MaterialButton
+        <android.support.design.button.MaterialButton
                 android:id="@+id/btn_save"
                 style="@style/DialogButtonStyle"
                 android:layout_width="0dp"

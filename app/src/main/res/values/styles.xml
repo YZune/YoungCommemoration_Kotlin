@@ -12,7 +12,7 @@
         <item name="android:textSize">24sp</item>
         <item name="android:gravity">center</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:fontFamily">@font/iconfont</item>
+        <item name="fontFamily">@font/iconfont</item>
     </style>
 
     <style name="DialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">

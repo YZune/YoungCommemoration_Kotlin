@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.suda.yzune.youngcommemoration_kotlin">
+          package="com.suda.yzune.youngcommemoration">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-            android:name=".App"
+            android:name="com.suda.yzune.youngcommemoration.App"
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -19,10 +19,27 @@
             tools:ignore="GoogleAppIndexingWarning"
             tools:replace="android:allowBackup"
             tools:targetApi="n">
-        <activity android:name=".event_add.AddEventActivity"
-                  android:label="编辑事件"
-                  android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".main.MainActivity">
+        <receiver android:name="com.suda.yzune.youngcommemoration.event_appwidget.EventAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/event_app_widget_info"/>
+        </receiver>
+
+        <activity android:name="com.suda.yzune.youngcommemoration.event_appwidget.EventAppWidgetConfigureActivity"
+                  android:label="小部件">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name="com.suda.yzune.youngcommemoration.event_add.AddEventActivity"
+                android:label="编辑事件"
+                android:windowSoftInputMode="adjustPan"/>
+        <activity android:name="com.suda.yzune.youngcommemoration.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

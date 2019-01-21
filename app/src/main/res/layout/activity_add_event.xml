@@ -5,233 +5,218 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:id="@+id/ll_root"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".event_add.AddEventActivity">
 
-    <ScrollView
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="效果预览"/>
+
+    <include
+            layout="@layout/item_event"/>
+
+    <TextView
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="选择类型"/>
+
+    <android.support.design.chip.ChipGroup
+            android:id="@+id/cg_type"
+            app:singleSelection="true"
+
+            app:chipSpacing="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <LinearLayout
+        <android.support.design.chip.Chip
+                android:checkable="true"
+                android:textColor="@android:color/white"
+                app:chipBackgroundColor="@color/pink"
+                android:id="@+id/chip_commemoration"
+                android:layout_marginStart="16dp"
+                android:text="纪念日"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <android.support.design.chip.Chip
+                android:id="@+id/chip_birth"
+                android:textColor="@android:color/white"
+                app:chipBackgroundColor="@color/colorAccent"
+                android:checkable="true"
+                android:layout_marginStart="16dp"
+                android:text="生日"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <android.support.design.chip.Chip
+                android:id="@+id/chip_lunar_birth"
+                android:textColor="@android:color/white"
+                app:chipBackgroundColor="@color/orange"
+                android:checkable="true"
+                android:layout_marginStart="16dp"
+                android:text="农历生日"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <android.support.design.chip.Chip
+                android:id="@+id/chip_rest"
+                android:textColor="@android:color/white"
+                app:chipBackgroundColor="@color/red"
+                android:checkable="true"
+                android:layout_marginStart="16dp"
+                android:text="倒数日"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </android.support.design.chip.ChipGroup>
+
+    <View
+            android:layout_marginBottom="8dp"
+            android:alpha="0.5"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
+
+        <TextView
+                android:id="@+id/tv_event_icon"
+                style="@style/IconTextViewStyle"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="@color/blue"/>
+
+        <EditText
+                android:id="@+id/et_event"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:layout_marginEnd="24dp"
+                android:background="@null"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:hint="寿星"
+                android:lines="1"
+                android:textSize="14sp"/>
+    </LinearLayout>
 
-            <TextView
-                    android:layout_marginBottom="-8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="效果预览"/>
+    <LinearLayout
+            android:background="@drawable/custom_ripple"
+            android:id="@+id/ll_date"
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
 
-            <include
-                    layout="@layout/item_event"/>
+        <TextView
+                style="@style/IconTextViewStyle"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="@color/orange"/>
 
-            <TextView
-                    android:layout_marginBottom="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="选择类型"/>
+        <TextView
+                android:id="@+id/et_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="24dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="出生日期"
+                android:lines="1"
+                android:textSize="14sp"/>
+    </LinearLayout>
 
-            <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/cg_type"
-                    app:singleSelection="true"
+    <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_time"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="?attr/selectableItemBackground">
 
-                    app:chipSpacing="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+        <TextView
+                style="@style/IconTextViewStyle"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="#FFA622"/>
 
-                <com.google.android.material.chip.Chip
-                        android:checkable="true"
-                        android:textColor="@android:color/white"
-                        app:chipBackgroundColor="@color/pink"
-                        android:id="@+id/chip_commemoration"
-                        android:layout_marginStart="16dp"
-                        android:text="纪念日"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/et_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="24dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="周一    第1 - 2节"
+                android:lines="1"
+                android:textSize="14sp"/>
+    </LinearLayout>
 
-                <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_birth"
-                        android:textColor="@android:color/white"
-                        app:chipBackgroundColor="@color/colorAccent"
-                        android:checkable="true"
-                        android:layout_marginStart="16dp"
-                        android:text="生日"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
 
-                <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_lunar_birth"
-                        android:textColor="@android:color/white"
-                        app:chipBackgroundColor="@color/orange"
-                        android:checkable="true"
-                        android:layout_marginStart="16dp"
-                        android:text="农历生日"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+        <TextView
+                style="@style/IconTextViewStyle"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="@color/lightBlue"/>
 
-                <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_rest"
-                        android:textColor="@android:color/white"
-                        app:chipBackgroundColor="@color/red"
-                        android:checkable="true"
-                        android:layout_marginStart="16dp"
-                        android:text="倒数日"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+        <EditText
+                android:id="@+id/et_msg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="24dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="备注"
+                android:lines="1"
+                android:textSize="14sp"/>
+    </LinearLayout>
 
-            </com.google.android.material.chip.ChipGroup>
+    <LinearLayout
+            android:id="@+id/ll_fav"
+            android:background="@drawable/custom_ripple"
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
 
-            <View
-                    android:layout_marginBottom="8dp"
-                    android:alpha="0.5"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+        <TextView
+                style="@style/IconTextViewStyle"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="@color/red"/>
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp">
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="24dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:text="置顶"
+                android:lines="1"
+                android:textSize="14sp"/>
 
-                <TextView
-                        android:id="@+id/tv_event_icon"
-                        style="@style/IconTextViewStyle"
-                        android:layout_width="56dp"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:textColor="@color/blue"/>
-
-                <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_event"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="24dp"
-                        android:background="@null"
-                        android:singleLine="true"
-                        android:gravity="center_vertical"
-                        android:hint="寿星"
-                        android:lines="1"
-                        android:textSize="14sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                    android:background="@drawable/custom_ripple"
-                    android:id="@+id/ll_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp">
-
-                <TextView
-                        style="@style/IconTextViewStyle"
-                        android:layout_width="56dp"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:textColor="@color/orange"/>
-
-                <TextView
-                        android:id="@+id/et_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="24dp"
-                        android:background="@null"
-                        android:gravity="center_vertical"
-                        android:hint="出生日期"
-                        android:lines="1"
-                        android:textSize="14sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                    android:visibility="gone"
-                    android:id="@+id/ll_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:background="?android:attr/selectableItemBackground">
-
-                <TextView
-                        style="@style/IconTextViewStyle"
-                        android:layout_width="56dp"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:textColor="#FFA622"/>
-
-                <TextView
-                        android:id="@+id/et_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="24dp"
-                        android:background="@null"
-                        android:gravity="center_vertical"
-                        android:hint="周一    第1 - 2节"
-                        android:lines="1"
-                        android:textSize="14sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp">
-
-                <TextView
-                        style="@style/IconTextViewStyle"
-                        android:layout_width="56dp"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:textColor="@color/lightBlue"/>
-
-                <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_msg"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="24dp"
-                        android:background="@null"
-                        android:gravity="center_vertical"
-                        android:hint="备注"
-                        android:lines="1"
-                        android:textSize="14sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                    android:id="@+id/ll_fav"
-                    android:background="@drawable/custom_ripple"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp">
-
-                <TextView
-                        style="@style/IconTextViewStyle"
-                        android:layout_width="56dp"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:textColor="@color/red"/>
-
-                <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="24dp"
-                        android:background="@null"
-                        android:gravity="center_vertical"
-                        android:text="置顶"
-                        android:lines="1"
-                        android:textSize="14sp"/>
-
-                <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/s_fav"
-                        android:layout_marginEnd="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+        <android.support.v7.widget.SwitchCompat
+                android:id="@+id/s_fav"
+                android:layout_marginEnd="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 </LinearLayout>
