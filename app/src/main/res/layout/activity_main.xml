@@ -127,6 +127,8 @@
                                 android:layout_height="match_parent"/>
 
                         <TextView
+                                android:maxLines="2"
+                                android:ellipsize="marquee"
                                 app:autoSizeMinTextSize="8sp"
                                 app:autoSizeMaxTextSize="16sp"
                                 app:autoSizeStepGranularity="1sp"
@@ -197,6 +199,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            app:headerLayout="@layout/nav_header"
+            app:menu="@menu/main_navigation_menu"
             android:fitsSystemWindows="true"/>
 
 </android.support.v4.widget.DrawerLayout>

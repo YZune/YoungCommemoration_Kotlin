@@ -21,6 +21,7 @@ import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import com.suda.yzune.youngcommemoration.GlideApp
 import com.suda.yzune.youngcommemoration.R
+import com.suda.yzune.youngcommemoration.TipsFragment
 import com.suda.yzune.youngcommemoration.base_view.BaseTitleActivity
 import com.suda.yzune.youngcommemoration.main.EventListAdapter
 import kotlinx.android.synthetic.main.event_app_widget.*
@@ -101,6 +102,8 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
         }
         initEvent()
         initList()
+        TipsFragment.newInstance("为了小部件正常工作，请<b><font color='#1976D2'>允许App保持后台，加入节电白名单</font></b>。")
+            .show(supportFragmentManager, "tips")
     }
 
     private fun initEvent() {

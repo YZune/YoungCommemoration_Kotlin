@@ -24,4 +24,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     suspend fun getFavEventInThread(): EventBean? {
         return eventDao.getFavInThread()
     }
+
+    suspend fun insertEvents(events: List<EventBean>) {
+        eventDao.insertList(events)
+    }
 }

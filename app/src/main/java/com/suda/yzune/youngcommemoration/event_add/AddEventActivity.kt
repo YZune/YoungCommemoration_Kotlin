@@ -29,6 +29,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.activity_add_event.*
 import kotlinx.android.synthetic.main.item_event.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.anko.*
@@ -41,6 +42,7 @@ class AddEventActivity : BaseTitleActivity() {
 
     private lateinit var viewModel: AddEventViewModel
     private val REQUEST_CODE_CHOOSE_BG = 23
+    private var makeSure = 0
 
     override fun onSetupSubButton(tvButton1: TextView, tvButton2: TextView) {
         val iconFont = ResourcesCompat.getFont(this, R.font.iconfont)
@@ -108,6 +110,7 @@ class AddEventActivity : BaseTitleActivity() {
         } else {
             viewModel.event = intent.extras!!.getParcelable("event")!!
             viewModel.isNew = false
+            btn_delete.visibility = View.VISIBLE
         }
         initView()
     }
@@ -115,6 +118,26 @@ class AddEventActivity : BaseTitleActivity() {
     private fun initEvent() {
         cv_event.setOnClickListener {
             pickImage()
+        }
+
+        btn_delete.setOnLongClickListener {
+            launch {
+                val msg = withContext(Dispatchers.IO) {
+                    try {
+                        viewModel.delete()
+                        "ok"
+                    } catch (e: Exception) {
+                        "发生异常>_<" + e.message
+                    }
+                }
+                if (msg == "ok") {
+                    longToast("删除成功")
+                    finish()
+                } else {
+                    longToast(msg)
+                }
+            }
+            return@setOnLongClickListener true
         }
 
         var chipId = 0
@@ -289,6 +312,19 @@ class AddEventActivity : BaseTitleActivity() {
 
                 )
                 .into(iv_pic_bg)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (makeSure == 0) {
+            ll_date.longSnackbar("再按一次退出编辑")
+            makeSure++
+            launch {
+                delay(5000)
+                makeSure = 0
+            }
+        } else {
+            super.onBackPressed()
         }
     }
 }

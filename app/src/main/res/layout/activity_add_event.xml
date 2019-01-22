@@ -219,4 +219,21 @@
                 android:layout_height="wrap_content"/>
     </LinearLayout>
 
+    <android.support.design.button.MaterialButton
+            android:id="@+id/btn_delete"
+            android:visibility="gone"
+            android:layout_marginTop="8dp"
+            app:rippleColor="@color/red"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center"
+            app:cornerRadius="64dp"
+            android:paddingStart="64dp"
+            android:paddingEnd="64dp"
+            app:strokeColor="@color/red"
+            android:textColor="@color/red"
+            android:text="长按删除事件"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 </LinearLayout>

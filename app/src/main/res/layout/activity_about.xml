@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
+        tools:context=".AboutActivity">
+
+    <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="24dp"
+            android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="8dp"
+            android:paddingLeft="48dp"
+            android:paddingTop="16dp"
+            android:paddingRight="48dp"
+            android:textSize="12sp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:autoLink="web"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="8dp"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp"
+            android:text="@string/app_name"
+            android:textSize="12sp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:autoLink="web"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="8dp"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp"
+            android:paddingBottom="16dp"
+            android:text="孕育于2018年2月3日\n重生于2019年1月22日\n本项目开源  欢迎star和fork\nhttps://github.com/YZune/YoungCommemoration_Kotlin"
+            android:textSize="12sp"/>
+
+</LinearLayout>

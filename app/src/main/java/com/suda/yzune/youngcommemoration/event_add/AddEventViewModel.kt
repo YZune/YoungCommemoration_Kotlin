@@ -32,4 +32,8 @@ class AddEventViewModel(application: Application) : AndroidViewModel(application
             eventDao.update(event)
         }
     }
+
+    suspend fun delete() {
+        eventDao.delete(event)
+    }
 }

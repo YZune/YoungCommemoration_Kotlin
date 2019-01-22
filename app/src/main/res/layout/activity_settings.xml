@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.suda.yzune.youngcommemoration.SettingsActivity">
+
+    <LinearLayout
+            android:layout_marginTop="8dp"
+            android:background="@drawable/custom_ripple"
+            android:id="@+id/ll_nav_bar_color"
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
+
+        <TextView
+                android:layout_marginStart="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="24dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:text="设置虚拟导航键颜色"
+                android:lines="1"
+                android:textSize="16sp"/>
+    </LinearLayout>
+
+    <ImageView
+            android:layout_marginTop="240dp"
+            android:layout_marginEnd="-64dp"
+            android:layout_marginBottom="-64dp"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

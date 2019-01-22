@@ -38,7 +38,7 @@ abstract class BaseTitleActivity : BaseActivity() {
     private fun createView(): View {
         return UI {
             constraintLayout {
-
+                backgroundColor = Color.WHITE
                 scrollView = scrollView {
                     overScrollMode = View.OVER_SCROLL_NEVER
                     isVerticalScrollBarEnabled = false

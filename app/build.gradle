@@ -17,14 +17,14 @@ android {
         applicationId "com.suda.yzune.youngcommemoration"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 8
+        versionName "1.998"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             zipAlignEnabled true
-            minifyEnabled true
+            minifyEnabled false
             proguardFile 'proguard-android.txt'
             proguardFile 'proguard-rules.pro'
         }
@@ -52,6 +52,7 @@ dependencies {
     implementation 'com.github.QuadFlask:colorpicker:0.0.13'
     implementation 'jp.wasabeef:glide-transformations:3.1.1'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation('com.github.florent37:glidepalette:2.1.2', {
         exclude group: 'com.android.support'
     })

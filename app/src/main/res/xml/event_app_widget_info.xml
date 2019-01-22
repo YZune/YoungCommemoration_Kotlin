@@ -3,7 +3,7 @@
                     android:minWidth="40dp"
                     android:minHeight="40dp"
                     android:updatePeriodMillis="14400000"
-                    android:previewImage="@drawable/example_appwidget_preview"
+                    android:previewImage="@drawable/appwidget_preview"
                     android:initialLayout="@layout/event_app_widget"
                     android:configure="com.suda.yzune.youngcommemoration.event_appwidget.EventAppWidgetConfigureActivity"
                     android:resizeMode="horizontal|vertical"

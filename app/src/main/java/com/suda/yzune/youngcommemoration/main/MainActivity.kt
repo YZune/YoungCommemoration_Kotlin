@@ -2,8 +2,12 @@ package com.suda.yzune.youngcommemoration.main
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
+import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
@@ -11,15 +15,31 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
-import com.suda.yzune.youngcommemoration.GlideApp
-import com.suda.yzune.youngcommemoration.R
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
+import com.google.gson.reflect.TypeToken
+import com.suda.yzune.youngcommemoration.*
 import com.suda.yzune.youngcommemoration.base_view.BaseActivity
+import com.suda.yzune.youngcommemoration.bean.EventBean
+import com.suda.yzune.youngcommemoration.bean.EventOldBean
+import com.suda.yzune.youngcommemoration.bean.SolarBean
+import com.suda.yzune.youngcommemoration.bean.UpdateInfoBean
 import com.suda.yzune.youngcommemoration.event_add.AddEventActivity
+import com.suda.yzune.youngcommemoration.utils.LunarUtils
+import com.suda.yzune.youngcommemoration.utils.MyRetrofitUtils
+import com.suda.yzune.youngcommemoration.utils.PreferenceUtils
+import com.suda.yzune.youngcommemoration.utils.UpdateUtils.getVersionCode
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
 import org.jetbrains.anko.*
+import org.jetbrains.anko.design.longSnackbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
 
 
 class MainActivity : BaseActivity() {
@@ -31,10 +51,33 @@ class MainActivity : BaseActivity() {
         lightStatusIcon = true
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        updateFromOldVersion()
         setContentView(com.suda.yzune.youngcommemoration.R.layout.activity_main)
         resizeMarginTop()
         initView()
         initEven()
+        initNavView()
+        MyRetrofitUtils.instance.getService().getUpdateInfo().enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {}
+
+            override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
+                if (response!!.body() != null) {
+                    val gson = Gson()
+                    try {
+                        val updateInfo = gson.fromJson<UpdateInfoBean>(
+                            response.body()!!.string(),
+                            object : TypeToken<UpdateInfoBean>() {
+                            }.type
+                        )
+                        if (updateInfo.id > getVersionCode(this@MainActivity.applicationContext)) {
+                            UpdateFragment.newInstance(updateInfo).show(supportFragmentManager, "update")
+                        }
+                    } catch (e: JsonSyntaxException) {
+
+                    }
+                }
+            }
+        })
     }
 
     override fun onStart() {
@@ -66,6 +109,114 @@ class MainActivity : BaseActivity() {
                             .intoBackground(v_fav_bg)
                     )
                     .into(iv_fav_bg)
+            }
+        }
+    }
+
+    private fun updateFromOldVersion() {
+        val eventJson = PreferenceUtils.getStringFromSP(applicationContext, "events", "")
+        if (eventJson != "") {
+            val gson = Gson()
+            val oldList = gson.fromJson<List<EventOldBean>>(eventJson, object : TypeToken<List<EventOldBean>>() {}.type)
+            val newList = arrayListOf<EventBean>()
+            oldList.forEach {
+                val d = it.date.split('-')
+                val mYear = d[0].toInt()
+                val mMonth = d[1].toInt()
+                val mDay = d[2].toInt()
+                val newEvent = EventBean().apply {
+                    this.content = it.context
+                    this.path = it.picture_path
+                    this.isFav = it.isFavourite
+                }
+                when (it.type) {
+                    // 农历生日，对应新的2
+                    3 -> {
+                        val solar = SolarBean(mYear, mMonth, mDay)
+                        val lunar = LunarUtils.solarToLunar(solar)
+                        newEvent.year = lunar.lunarYear
+                        newEvent.month = lunar.lunarMonth - 1
+                        newEvent.day = lunar.lunarDay
+                        newEvent.type = 2
+                        newList.add(newEvent)
+                    }
+                    2 -> {
+                        newEvent.year = mYear
+                        newEvent.month = mMonth - 1
+                        newEvent.day = mDay
+                        newEvent.type = 3
+                        newList.add(newEvent)
+                    }
+                    else -> {
+                        newEvent.year = mYear
+                        newEvent.month = mMonth - 1
+                        newEvent.day = mDay
+                        newEvent.type = it.type
+                        newList.add(newEvent)
+                    }
+                }
+            }
+            launch {
+                val msg = withContext(Dispatchers.IO) {
+                    try {
+                        viewModel.insertEvents(newList)
+                        "ok"
+                    } catch (e: Exception) {
+                        "发生异常>_<" + e.message
+                    }
+                }
+                if (msg == "ok") {
+                    PreferenceUtils.remove(applicationContext, "events")
+                    TipsFragment.newInstance("发现你是由旧版本升级上来的哦，注意你从旧版本放置在桌面的<b><font color='#1976D2'>小部件全部失效</font></b>请重新放置。<br>另外为了小部件正常工作，请<b><font color='#1976D2'>允许App保持后台，加入节电白名单</font></b>。")
+                        .show(supportFragmentManager, "tips")
+                } else {
+                    longToast(msg)
+                }
+            }
+
+        }
+    }
+
+    private fun initNavView() {
+        navigation_view.itemIconTintList = null
+        navigation_view.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_about -> {
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                    drawer_layout.postDelayed({
+                        startActivity<AboutActivity>()
+                    }, 360)
+                    return@setNavigationItemSelectedListener true
+                }
+                R.id.nav_feedback -> {
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                    drawer_layout.postDelayed({
+                        val c = Calendar.getInstance()
+                        val hour = c.get(Calendar.HOUR_OF_DAY)
+                        if (hour !in 8..21) {
+                            longToast("开发者在休息哦(～﹃～)~zZ请换个时间反馈吧")
+                        } else {
+                            if (isQQClientAvailable(applicationContext)) {
+                                val qqUrl = "mqqwpa://im/chat?chat_type=wpa&uin=1055614742&version=1"
+                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(qqUrl)))
+                            } else {
+                                longToast("手机上没有安装QQ，无法启动聊天窗口:-(")
+                            }
+                        }
+                    }, 360)
+                    return@setNavigationItemSelectedListener true
+                }
+                R.id.nav_setting -> {
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                    drawer_layout.postDelayed({
+                        startActivity<SettingsActivity>()
+                    }, 360)
+                    return@setNavigationItemSelectedListener true
+                }
+                else -> {
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                    return@setNavigationItemSelectedListener true
+                }
             }
         }
     }
@@ -111,8 +262,20 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initEven() {
+        tv_nav.setOnClickListener {
+            drawer_layout.openDrawer(GravityCompat.START)
+        }
+
         tv_add.setOnClickListener {
             startActivity<AddEventActivity>()
+        }
+
+        tv_share.setOnClickListener {
+            it.longSnackbar("正在开发中哦<(￣︶￣)>")
+        }
+
+        tv_sort.setOnClickListener {
+            it.longSnackbar("正在开发中哦<(￣︶￣)>")
         }
 
         appbar_layout.addOnOffsetChangedListener(
@@ -122,5 +285,22 @@ class MainActivity : BaseActivity() {
                 ll_info.alpha = alpha
                 tv_event_main.alpha = 1 - alpha
             })
+    }
+
+    private fun isQQClientAvailable(context: Context): Boolean {
+        val packageManager = context.packageManager
+        val pInfo = packageManager.getInstalledPackages(0)
+        if (pInfo != null) {
+            for (i in pInfo.indices) {
+                val pn = pInfo[i].packageName
+                if (pn.equals("com.tencent.qqlite", ignoreCase = true)
+                    || pn.equals("com.tencent.mobileqq", ignoreCase = true)
+                    || pn.equals("com.tencent.tim", ignoreCase = true)
+                ) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
