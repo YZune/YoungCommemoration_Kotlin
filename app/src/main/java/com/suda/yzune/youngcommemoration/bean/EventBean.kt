@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcelable
+import android.util.Log
 import com.suda.yzune.youngcommemoration.utils.LunarUtils
 import kotlinx.android.parcel.Parcelize
 import java.util.*
@@ -55,11 +56,11 @@ data class EventBean(
                 val curYear = Calendar.getInstance().get(Calendar.YEAR)
                 var durYears = curYear - year
                 count = getDaysFromNow(curYear)
-                if (count > 0) {
+                count = if (count > 0) {
                     durYears++
-                    count = -getDaysFromNow(curYear + 1)
+                    -getDaysFromNow(curYear + 1)
                 } else {
-                    count = -count
+                    -count
                 }
                 arrayOf("${content}的 $durYears 岁生日", "还有 $count 天", "生日：$year - ${month + 1} - $day")
             }
@@ -76,12 +77,18 @@ data class EventBean(
                 val cal = Calendar.getInstance()
                 //在农历生日下，存储的date就直接是农历日期
                 val lunarBirth = LunarBean(year, month + 1, day, false)
-                val lunarNow =
-                    LunarBean(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DATE), false)
+                val lunarNow = LunarUtils.solarToLunar(
+                    SolarBean(
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH) + 1,
+                        cal.get(Calendar.DATE)
+                    )
+                )
                 var durYears = lunarNow.lunarYear - lunarBirth.lunarYear
                 lunarBirth.lunarYear = lunarNow.lunarYear
                 var solarBirth = LunarUtils.lunarToSolar(lunarBirth)
                 count = getDaysFromNow(solarBirth.solarYear, solarBirth.solarMonth - 1, solarBirth.solarDay)
+                Log.d("生日", "${solarBirth.solarYear}, ${solarBirth.solarMonth}, ${solarBirth.solarDay}")
                 if (count > 0) {
                     durYears++
                     lunarBirth.lunarYear = lunarNow.lunarYear + 1

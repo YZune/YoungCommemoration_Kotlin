@@ -52,7 +52,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         updateFromOldVersion()
-        setContentView(com.suda.yzune.youngcommemoration.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
         resizeMarginTop()
         initView()
         initEven()
