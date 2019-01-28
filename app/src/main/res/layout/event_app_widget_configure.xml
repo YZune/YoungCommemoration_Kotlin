@@ -35,7 +35,6 @@
     <LinearLayout
             android:layout_marginTop="8dp"
             android:id="@+id/ll_with_pic"
-            android:background="@drawable/custom_ripple"
             android:layout_width="match_parent"
             android:layout_height="64dp">
 
@@ -68,7 +67,6 @@
     <LinearLayout
             android:layout_marginTop="8dp"
             android:id="@+id/ll_with_shadow"
-            android:background="@drawable/custom_ripple"
             android:layout_width="match_parent"
             android:layout_height="64dp">
 
@@ -100,7 +98,6 @@
 
     <LinearLayout
             android:id="@+id/ll_bg_color"
-            android:background="@drawable/custom_ripple"
             android:layout_width="match_parent"
             android:layout_height="64dp">
 
@@ -125,7 +122,6 @@
 
     <LinearLayout
             android:id="@+id/ll_text_color"
-            android:background="@drawable/custom_ripple"
             android:layout_width="match_parent"
             android:layout_height="64dp">
 

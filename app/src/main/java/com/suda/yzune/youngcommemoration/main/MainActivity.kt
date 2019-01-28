@@ -1,12 +1,17 @@
 package com.suda.yzune.youngcommemoration.main
 
+import android.Manifest
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
@@ -18,6 +23,7 @@ import com.github.florent37.glidepalette.GlidePalette
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
+import com.nbsp.materialfilepicker.ui.FilePickerActivity
 import com.suda.yzune.youngcommemoration.*
 import com.suda.yzune.youngcommemoration.base_view.BaseActivity
 import com.suda.yzune.youngcommemoration.bean.EventBean
@@ -213,6 +219,25 @@ class MainActivity : BaseActivity() {
                     }, 360)
                     return@setNavigationItemSelectedListener true
                 }
+                R.id.nav_backup -> {
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                    drawer_layout.postDelayed({
+                        if (ContextCompat.checkSelfPermission(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            ActivityCompat.requestPermissions(
+                                this,
+                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                1
+                            )
+                        } else {
+                            BackupFragment.newInstance().show(supportFragmentManager, null)
+                        }
+                    }, 360)
+                    return@setNavigationItemSelectedListener true
+                }
                 else -> {
                     drawer_layout.closeDrawer(GravityCompat.START)
                     return@setNavigationItemSelectedListener true
@@ -223,7 +248,7 @@ class MainActivity : BaseActivity() {
 
     private fun initView() {
         adapter = EventListAdapter(R.layout.item_event, viewModel.showList)
-        adapter.setOnItemClickListener { adapter, view, position ->
+        adapter.setOnItemClickListener { _, _, position ->
             startActivity<AddEventActivity>("event" to viewModel.showList[position])
         }
         adapter.emptyView = UI {
@@ -302,5 +327,46 @@ class MainActivity : BaseActivity() {
             }
         }
         return false
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            1 -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    BackupFragment().show(supportFragmentManager, null)
+                } else {
+                    this.longToast("你取消了授权>_<无法备份还原")
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val filePath = data!!.getStringExtra(FilePickerActivity.RESULT_FILE_PATH)
+            launch {
+                val import = withContext(Dispatchers.IO) {
+                    try {
+                        viewModel.importFromFile(filePath)
+                    } catch (e: Exception) {
+                        e.message
+                    }
+                }
+                when (import) {
+                    "ok" -> {
+                        toast("导入成功(ﾟ▽ﾟ)/")
+                    }
+                    else -> longToast("发生异常>_<\n$import")
+                }
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        when {
+            drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawer(GravityCompat.START)
+            else -> super.onBackPressed()
+        }
     }
 }

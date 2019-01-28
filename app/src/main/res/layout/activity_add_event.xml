@@ -115,7 +115,6 @@
     </LinearLayout>
 
     <LinearLayout
-            android:background="@drawable/custom_ripple"
             android:id="@+id/ll_date"
             android:layout_width="match_parent"
             android:layout_height="64dp">
@@ -190,7 +189,6 @@
 
     <LinearLayout
             android:id="@+id/ll_fav"
-            android:background="@drawable/custom_ripple"
             android:layout_width="match_parent"
             android:layout_height="64dp">
 

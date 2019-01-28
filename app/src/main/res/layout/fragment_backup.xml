@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="280dp"
+              android:layout_gravity="center"
+              android:layout_height="wrap_content"
+              android:background="@android:color/white"
+              android:orientation="vertical"
+              tools:context=".main.BackupFragment">
+
+    <TextView
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:fontFamily="@font/iconfont"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text=""
+            android:id="@+id/ib_close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="20sp"/>
+
+    <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="-16dp"
+            android:gravity="center"
+            android:text="操作"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"/>
+
+    <TextView
+            android:id="@+id/tv_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:text="备份文件将存放在SD卡“咩咩”中\n备份中对于图片的处理仅备份对它的引用，即原有图片删除后，还原事件时图片无法恢复"
+            android:textSize="12sp"/>
+
+    <LinearLayout
+            android:id="@+id/ll_export"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <android.support.design.button.MaterialButton
+                android:id="@+id/tv_export"
+                style="@style/DialogButtonStyle"
+                android:layout_marginTop="8dp"
+                android:text="备份"/>
+
+        <android.support.design.button.MaterialButton
+                android:id="@+id/tv_share"
+                style="@style/DialogButtonStyle"
+                android:text="备份并分享文件"/>
+
+        <android.support.design.button.MaterialButton
+                android:id="@+id/tv_import"
+                style="@style/DialogButtonStyle"
+                android:layout_marginBottom="8dp"
+                android:text="还原"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_import"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <android.support.design.button.MaterialButton
+                android:id="@+id/tv_default"
+                style="@style/DialogButtonStyle"
+                android:layout_marginTop="8dp"
+                android:text="从默认路径"/>
+
+        <android.support.design.button.MaterialButton
+                android:id="@+id/tv_qq"
+                style="@style/DialogButtonStyle"
+                android:text="从QQ接收路径"/>
+
+        <android.support.design.button.MaterialButton
+                android:id="@+id/tv_tim"
+                style="@style/DialogButtonStyle"
+                android:text="从Tim接收路径"/>
+
+        <android.support.design.button.MaterialButton
+                android:id="@+id/tv_wechat"
+                style="@style/DialogButtonStyle"
+                android:text="从微信接收路径"/>
+
+        <android.support.design.button.MaterialButton
+                android:id="@+id/tv_self"
+                style="@style/DialogButtonStyle"
+                android:layout_marginBottom="8dp"
+                android:text="自由选择路径"/>
+
+    </LinearLayout>
+
+</LinearLayout>
