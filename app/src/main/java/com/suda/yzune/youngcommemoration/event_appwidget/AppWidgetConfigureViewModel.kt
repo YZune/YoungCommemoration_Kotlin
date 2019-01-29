@@ -15,11 +15,11 @@ class AppWidgetConfigureViewModel(application: Application) : AndroidViewModel(a
     private val eventDao = dataBase.eventDao()
     private val widgetDao = dataBase.singleWidgetDao()
 
-    fun getAllEvents(): List<EventBean> {
+    suspend fun getAllEvents(): List<EventBean> {
         return eventDao.getAllInThread()
     }
 
-    fun insertWidget() {
+    suspend fun insertWidget() {
         widgetDao.insert(widgetBean)
     }
 }

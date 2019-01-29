@@ -74,6 +74,18 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center">
 
+                        <TextView
+                                android:visibility="gone"
+                                android:id="@+id/tv_plus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="bottom"
+                                android:paddingBottom="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:text="第"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"/>
+
                         <com.chaychan.viewlib.NumberRunningTextView
                                 android:id="@+id/tv_days"
                                 android:layout_width="wrap_content"

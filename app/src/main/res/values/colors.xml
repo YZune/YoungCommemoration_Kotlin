@@ -6,6 +6,7 @@
 
     <color name="grey">#9aa3a3a3</color>
     <color name="bigCountGrey">#85A3A3A3</color>
+    <color name="maskBlack">#80000000</color>
 
     <color name="red">#FF1744</color>
     <color name="pink">#fa6278</color>

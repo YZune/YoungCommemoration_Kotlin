@@ -60,7 +60,7 @@ class EventAppWidget : AppWidgetProvider() {
             appWidgetId: Int, event: EventBean, widget: SingleAppWidgetBean
         ) {
             val mRemoteViews = RemoteViews(context.packageName, R.layout.event_app_widget)
-            val description = event.getDescriptionWithDays()
+            val description = event.getDescriptionWithDays(context)
             mRemoteViews.setTextViewText(R.id.tv_event_widget, description[0])
             mRemoteViews.setTextViewText(R.id.tv_days_widget, description[1])
             if (event.msg.isBlank()) {

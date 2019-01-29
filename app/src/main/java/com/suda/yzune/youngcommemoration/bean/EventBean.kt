@@ -3,9 +3,11 @@ package com.suda.yzune.youngcommemoration.bean
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
+import android.content.Context
 import android.os.Parcelable
 import android.util.Log
 import com.suda.yzune.youngcommemoration.utils.LunarUtils
+import com.suda.yzune.youngcommemoration.utils.PreferenceUtils
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -40,7 +42,7 @@ data class EventBean(
         msg: String
     ) : this(id, content, year, month, day, type, path, isFav, msg, 0)
 
-    fun getDescriptionWithDays(): Array<String> {
+    fun getDescriptionWithDays(context: Context): Array<String> {
         if (year == 0) {
             val cal = Calendar.getInstance()
             year = cal.get(Calendar.YEAR)
@@ -50,7 +52,12 @@ data class EventBean(
         return when (type) {
             0 -> {
                 count = getDaysFromNow()
-                arrayOf("「$content」", "$count 天", "从 $year - ${month + 1} - $day")
+                if (PreferenceUtils.getBooleanFromSP(context, "s_day_plus", false)) {
+                    count++
+                    arrayOf("「$content」", "第 $count 天", "从 $year - ${month + 1} - $day")
+                } else {
+                    arrayOf("「$content」", "$count 天", "从 $year - ${month + 1} - $day")
+                }
             }
             1 -> {
                 val curYear = Calendar.getInstance().get(Calendar.YEAR)

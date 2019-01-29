@@ -1,26 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.suda.yzune.youngcommemoration.SettingsActivity">
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        tools:context="com.suda.yzune.youngcommemoration.SettingsActivity">
+
+    <TextView
+            android:id="@+id/tv_nav_bar_color"
+            android:paddingStart="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:paddingEnd="24dp"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:text="设置虚拟导航键颜色"
+            android:lines="1"
+            android:textSize="16sp"/>
 
     <LinearLayout
-            android:layout_marginTop="8dp"
-            android:id="@+id/ll_nav_bar_color"
+            android:background="?attr/selectableItemBackground"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:id="@+id/ll_day_plus"
             android:layout_width="match_parent"
             android:layout_height="64dp">
 
         <TextView
-                android:layout_marginStart="24dp"
-                android:layout_width="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="24dp"
-                android:background="@null"
                 android:gravity="center_vertical"
-                android:text="设置虚拟导航键颜色"
+                android:text="纪念日按「第几天」算"
                 android:lines="1"
                 android:textSize="16sp"/>
+
+        <android.support.v7.widget.SwitchCompat
+                android:id="@+id/s_day_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

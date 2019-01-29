@@ -3,7 +3,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              tools:context=".event_appwidget.EventAppWidgetConfigureActivity">
 
     <TextView
             android:layout_width="wrap_content"
@@ -43,7 +44,7 @@
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
                 android:text=""
-                android:textColor="@color/blue_500"/>
+                android:textColor="@color/colorAccent"/>
 
         <TextView
                 android:layout_width="0dp"
@@ -75,7 +76,7 @@
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
                 android:text=""
-                android:textColor="@color/blue_700"/>
+                android:textColor="@color/colorAccent"/>
 
         <TextView
                 android:layout_width="0dp"
@@ -106,7 +107,7 @@
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
                 android:text=""
-                android:textColor="@color/ruri"/>
+                android:textColor="@color/colorAccent"/>
 
         <TextView
                 android:layout_width="0dp"
@@ -129,7 +130,7 @@
                 style="@style/IconTextViewStyle"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
-                android:textColor="@color/blue"
+                android:textColor="@color/colorAccent"
                 android:text=""/>
 
         <TextView

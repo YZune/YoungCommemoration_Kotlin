@@ -21,7 +21,7 @@ class EventListAdapter(layoutResId: Int, data: MutableList<EventBean>) :
         if (helper.layoutPosition == 0) {
             (helper.getView<View>(R.id.cv_event).layoutParams as LinearLayout.LayoutParams).topMargin = mContext.dip(24)
         }
-        val description = item.getDescriptionWithDays()
+        val description = item.getDescriptionWithDays(mContext)
         helper.setText(R.id.tv_content, description[0])
         helper.setText(R.id.tv_count, description[1])
         helper.setText(R.id.tv_date, description[2])

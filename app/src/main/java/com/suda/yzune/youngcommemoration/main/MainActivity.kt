@@ -31,6 +31,7 @@ import com.suda.yzune.youngcommemoration.bean.EventOldBean
 import com.suda.yzune.youngcommemoration.bean.SolarBean
 import com.suda.yzune.youngcommemoration.bean.UpdateInfoBean
 import com.suda.yzune.youngcommemoration.event_add.AddEventActivity
+import com.suda.yzune.youngcommemoration.share.ShareEventActivity
 import com.suda.yzune.youngcommemoration.utils.LunarUtils
 import com.suda.yzune.youngcommemoration.utils.MyRetrofitUtils
 import com.suda.yzune.youngcommemoration.utils.PreferenceUtils
@@ -84,6 +85,14 @@ class MainActivity : BaseActivity() {
                 }
             }
         })
+
+        if (!PreferenceUtils.getBooleanFromSP(this, "huawei_appwidget", false)) {
+            TipsFragment.newInstance(
+                "从旧版本升级上来的<b><font color='#1976D2'>华为用户</font></b>，即使重新放置小部件可能也无法正常显示，请在<b><font color='#1976D2'>侧栏备份</font></b>，然后卸载App重新安装，再还原数据，这样应该能解决小部件的显示问题哦。",
+                "huawei_appwidget"
+            )
+                .show(supportFragmentManager, null)
+        }
     }
 
     override fun onStart() {
@@ -100,8 +109,18 @@ class MainActivity : BaseActivity() {
             } else {
                 ll_days.visibility = View.VISIBLE
                 tv_start_time.visibility = View.VISIBLE
-                val description = viewModel.favEvent!!.getDescriptionWithDays()
+                val description = viewModel.favEvent!!.getDescriptionWithDays(this@MainActivity)
                 tv_event.text = description[0]
+                if (viewModel.favEvent!!.type == 0 && PreferenceUtils.getBooleanFromSP(
+                        this@MainActivity,
+                        "s_day_plus",
+                        false
+                    )
+                ) {
+                    tv_plus.visibility = View.VISIBLE
+                } else {
+                    tv_plus.visibility = View.GONE
+                }
                 tv_days.setContent(viewModel.favEvent!!.count.toString())
                 tv_start_time.text = description[2]
                 tv_event_main.text = description[0] + " " + description[1]
@@ -173,7 +192,10 @@ class MainActivity : BaseActivity() {
                 }
                 if (msg == "ok") {
                     PreferenceUtils.remove(applicationContext, "events")
-                    TipsFragment.newInstance("发现你是由旧版本升级上来的哦，注意你从旧版本放置在桌面的<b><font color='#1976D2'>小部件全部失效</font></b>请重新放置。<br>另外为了小部件正常工作，请<b><font color='#1976D2'>允许App保持后台，加入节电白名单</font></b>。")
+                    TipsFragment.newInstance(
+                        "发现你是由旧版本升级上来的哦，注意你从旧版本放置在桌面的<b><font color='#1976D2'>小部件全部失效</font></b>请重新放置。<br>另外为了小部件正常工作，请<b><font color='#1976D2'>允许App保持后台，加入节电白名单</font></b>。",
+                        "v1.998"
+                    )
                         .show(supportFragmentManager, "tips")
                 } else {
                     longToast(msg)
@@ -296,7 +318,7 @@ class MainActivity : BaseActivity() {
         }
 
         tv_share.setOnClickListener {
-            it.longSnackbar("正在开发中哦<(￣︶￣)>")
+            startActivity<ShareEventActivity>()
         }
 
         tv_sort.setOnClickListener {

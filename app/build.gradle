@@ -17,8 +17,8 @@ android {
         applicationId "com.suda.yzune.youngcommemoration"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 9
-        versionName "1.999"
+        versionCode 11
+        versionName "v2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

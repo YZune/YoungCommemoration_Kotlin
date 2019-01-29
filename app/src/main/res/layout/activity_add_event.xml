@@ -188,6 +188,7 @@
     </LinearLayout>
 
     <LinearLayout
+            android:background="?attr/selectableItemBackground"
             android:id="@+id/ll_fav"
             android:layout_width="match_parent"
             android:layout_height="64dp">

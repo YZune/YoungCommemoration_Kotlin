@@ -18,6 +18,9 @@
             tools:ignore="GoogleAppIndexingWarning"
             tools:replace="android:allowBackup"
             tools:targetApi="n">
+        <activity android:name=".share.ShareEventActivity"
+                  android:label="分享">
+        </activity>
         <activity
                 android:name=".SettingsActivity"
                 android:label="设置">

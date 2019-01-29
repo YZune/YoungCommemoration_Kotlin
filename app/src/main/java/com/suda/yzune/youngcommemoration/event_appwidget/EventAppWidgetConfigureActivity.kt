@@ -24,6 +24,7 @@ import com.suda.yzune.youngcommemoration.R
 import com.suda.yzune.youngcommemoration.TipsFragment
 import com.suda.yzune.youngcommemoration.base_view.BaseTitleActivity
 import com.suda.yzune.youngcommemoration.main.EventListAdapter
+import com.suda.yzune.youngcommemoration.utils.PreferenceUtils
 import kotlinx.android.synthetic.main.event_app_widget.*
 import kotlinx.android.synthetic.main.event_app_widget_configure.*
 import kotlinx.coroutines.Dispatchers
@@ -102,8 +103,10 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
         }
         initEvent()
         initList()
-        TipsFragment.newInstance("为了小部件正常工作，请<b><font color='#1976D2'>允许App保持后台，加入节电白名单</font></b>。")
-            .show(supportFragmentManager, "tips")
+        if (!PreferenceUtils.getBooleanFromSP(this, "appwidget", false)) {
+            TipsFragment.newInstance("为了小部件正常工作，请<b><font color='#1976D2'>允许App保持后台，加入节电白名单</font></b>。", "appwidget")
+                .show(supportFragmentManager, "tips")
+        }
     }
 
     private fun initEvent() {
@@ -199,7 +202,7 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
     }
 
     private fun setPreviewContent() {
-        val description = viewModel.selectedEvent!!.getDescriptionWithDays()
+        val description = viewModel.selectedEvent!!.getDescriptionWithDays(this)
         tv_event_widget.text = description[0]
         tv_days_widget.text = description[1]
         if (viewModel.selectedEvent!!.msg.isBlank()) {

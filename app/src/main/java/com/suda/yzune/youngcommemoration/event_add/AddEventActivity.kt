@@ -224,7 +224,7 @@ class AddEventActivity : BaseTitleActivity() {
     }
 
     private fun refreshPreview() {
-        val description = viewModel.event.getDescriptionWithDays()
+        val description = viewModel.event.getDescriptionWithDays(this)
         tv_content.text = description[0]
         tv_count.text = description[1]
         tv_date.text = description[2]

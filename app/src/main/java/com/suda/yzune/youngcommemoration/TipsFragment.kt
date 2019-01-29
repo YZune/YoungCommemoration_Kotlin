@@ -7,6 +7,7 @@ import android.support.v4.text.HtmlCompat
 import android.text.Html
 import android.text.Spanned
 import android.view.View
+import com.suda.yzune.youngcommemoration.utils.PreferenceUtils
 import kotlinx.android.synthetic.main.fragment_tips.*
 
 class TipsFragment : BaseDialogFragment() {
@@ -15,11 +16,13 @@ class TipsFragment : BaseDialogFragment() {
         get() = R.layout.fragment_tips
 
     private var tips = ""
+    private var key = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             tips = it.getString("tips", "")
+            key = it.getString("key", "")
         }
     }
 
@@ -27,6 +30,7 @@ class TipsFragment : BaseDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         tv_info.text = getHtmlSpannedString(tips)
         tv_visit.setOnClickListener {
+            PreferenceUtils.saveBooleanToSP(activity!!, key, true)
             dismiss()
         }
         ib_close.setOnClickListener {
@@ -44,10 +48,11 @@ class TipsFragment : BaseDialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(arg: String) =
+        fun newInstance(arg: String, arg1: String) =
             TipsFragment().apply {
                 arguments = Bundle().apply {
                     putString("tips", arg)
+                    putString("key", arg1)
                 }
             }
     }

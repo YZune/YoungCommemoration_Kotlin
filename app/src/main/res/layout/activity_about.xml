@@ -47,7 +47,16 @@
             android:paddingLeft="48dp"
             android:paddingRight="48dp"
             android:paddingBottom="16dp"
-            android:text="孕育于2018年2月3日\n重生于2019年1月22日\n本项目开源  欢迎star和fork\nhttps://github.com/YZune/YoungCommemoration_Kotlin"
+            android:text="孕育于 2018 年 2 月 3 日\n重生于 2019 年 1 月 22 日\n本项目开源  欢迎 star 和 fork \nhttps://github.com/YZune/YoungCommemoration_Kotlin"
             android:textSize="12sp"/>
+
+    <ImageView
+            android:id="@+id/iv_share"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="64dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
 
 </LinearLayout>
