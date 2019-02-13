@@ -3,6 +3,7 @@ package com.suda.yzune.youngcommemoration.main
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.suda.yzune.youngcommemoration.AppDatabase
@@ -14,6 +15,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val showList = arrayListOf<EventBean>()
     var favEvent: EventBean? = null
+    val sortTypeLiveData = MutableLiveData<Int>()
     private val dataBase = AppDatabase.getDatabase(application)
     private val eventDao = dataBase.eventDao()
 
@@ -31,6 +33,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun insertEvents(events: List<EventBean>) {
         eventDao.insertList(events)
+    }
+
+    suspend fun updateEvents(events: List<EventBean>) {
+        eventDao.updateEvents(events)
     }
 
     suspend fun exportData(currentDir: String): String {

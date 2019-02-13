@@ -7,7 +7,6 @@ import android.appwidget.AppWidgetManager
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -16,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
+import android.widget.SeekBar
 import android.widget.TextView
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
@@ -25,7 +25,7 @@ import com.suda.yzune.youngcommemoration.TipsFragment
 import com.suda.yzune.youngcommemoration.base_view.BaseTitleActivity
 import com.suda.yzune.youngcommemoration.main.EventListAdapter
 import com.suda.yzune.youngcommemoration.utils.PreferenceUtils
-import kotlinx.android.synthetic.main.event_app_widget.*
+import kotlinx.android.synthetic.main.event_app_widget_1.*
 import kotlinx.android.synthetic.main.event_app_widget_configure.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -123,25 +123,26 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
             }
         }
 
-        ll_with_shadow.setOnClickListener {
-            s_shadow.isChecked = !s_shadow.isChecked
-        }
-
-        s_shadow.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.widgetBean.withShadow = isChecked
-            if (isChecked) {
-                ll_background.translationZ = dip(4).toFloat()
-            } else {
-                ll_background.translationZ = 0f
+        sb_weight.max = 9
+        sb_weight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                tv_weight.text = "${progress + 1} : 1"
+                viewModel.widgetBean.weight = progress + 1
             }
-        }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+
+        })
 
         ll_bg_color.setOnClickListener {
             buildColorPickerDialogBuilder()
                 .initialColor(viewModel.widgetBean.bgColor)
                 .setPositiveButton("确定") { _, colorInt, _ ->
                     viewModel.widgetBean.bgColor = colorInt
-                    ll_background.backgroundTintList = ColorStateList.valueOf(colorInt)
+                    //ll_event_info.backgroundColor = colorInt
+                    ll_background.backgroundColor = colorInt
                 }
                 .build()
                 .show()

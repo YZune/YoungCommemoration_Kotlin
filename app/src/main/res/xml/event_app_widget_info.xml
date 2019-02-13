@@ -4,9 +4,9 @@
                     android:minHeight="40dp"
                     android:updatePeriodMillis="14400000"
                     android:previewImage="@drawable/appwidget_preview"
-                    android:initialLayout="@layout/event_app_widget"
+                    android:initialLayout="@layout/event_app_widget_0"
                     android:configure="com.suda.yzune.youngcommemoration.event_appwidget.EventAppWidgetConfigureActivity"
                     android:resizeMode="horizontal|vertical"
                     android:widgetCategory="home_screen"
-                    android:initialKeyguardLayout="@layout/event_app_widget">
+                    android:initialKeyguardLayout="@layout/event_app_widget_0">
 </appwidget-provider>

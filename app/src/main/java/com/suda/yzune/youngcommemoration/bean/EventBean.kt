@@ -8,6 +8,7 @@ import android.os.Parcelable
 import android.util.Log
 import com.suda.yzune.youngcommemoration.utils.LunarUtils
 import com.suda.yzune.youngcommemoration.utils.PreferenceUtils
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -18,14 +19,13 @@ data class EventBean(
     var id: Int,
     var content: String,
     var year: Int,
-    var month: Int, // 注意1月对应的值为0
+    var month: Int, //注意1月对应的值为0
     var day: Int,
     var type: Int,
     var path: String,
     var isFav: Boolean,
     var msg: String,
-    @Ignore
-    var count: Int = 0
+    var sortNum: Int = 0
 ) : Parcelable {
 
     constructor() : this(0, "", 0, 0, 0, 0, "", false, "")
@@ -42,6 +42,46 @@ data class EventBean(
         msg: String
     ) : this(id, content, year, month, day, type, path, isFav, msg, 0)
 
+    @IgnoredOnParcel
+    @Ignore
+    var count: Int = 0
+        get() = when (type) {
+            1 -> {
+                val curYear = Calendar.getInstance().get(Calendar.YEAR)
+                val c = getDaysFromNow(curYear)
+                if (c > 0) {
+                    -getDaysFromNow(curYear + 1)
+                } else {
+                    -c
+                }
+            }
+            2 -> {
+                val cal = Calendar.getInstance()
+                //在农历生日下，存储的date就直接是农历日期
+                val lunarBirth = LunarBean(year, month + 1, day, false)
+                val lunarNow = LunarUtils.solarToLunar(
+                    SolarBean(
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH) + 1,
+                        cal.get(Calendar.DATE)
+                    )
+                )
+                lunarBirth.lunarYear = lunarNow.lunarYear
+                var solarBirth = LunarUtils.lunarToSolar(lunarBirth)
+                val c = getDaysFromNow(solarBirth.solarYear, solarBirth.solarMonth - 1, solarBirth.solarDay)
+                if (c > 0) {
+                    lunarBirth.lunarYear = lunarNow.lunarYear + 1
+                    solarBirth = LunarUtils.lunarToSolar(lunarBirth)
+                    -getDaysFromNow(solarBirth.solarYear, solarBirth.solarMonth - 1, solarBirth.solarDay)
+                } else {
+                    -c
+                }
+            }
+            else -> {
+                getDaysFromNow()
+            }
+        }
+
     fun getDescriptionWithDays(context: Context): Array<String> {
         if (year == 0) {
             val cal = Calendar.getInstance()
@@ -51,10 +91,8 @@ data class EventBean(
         }
         return when (type) {
             0 -> {
-                count = getDaysFromNow()
                 if (PreferenceUtils.getBooleanFromSP(context, "s_day_plus", false)) {
-                    count++
-                    arrayOf("「$content」", "第 $count 天", "从 $year - ${month + 1} - $day")
+                    arrayOf("「$content」", "第 ${count + 1} 天", "从 $year - ${month + 1} - $day")
                 } else {
                     arrayOf("「$content」", "$count 天", "从 $year - ${month + 1} - $day")
                 }
@@ -72,12 +110,10 @@ data class EventBean(
                 arrayOf("${content}的 $durYears 岁生日", "还有 $count 天", "生日：$year - ${month + 1} - $day")
             }
             3 -> {
-                count = getDaysFromNow()
                 if (count > 0) {
                     arrayOf("${content}已过去", "$count 天", "时间：$year - ${month + 1} - $day")
                 } else {
-                    count = -count
-                    arrayOf("${content}还有", "$count 天", "时间：$year - ${month + 1} - $day")
+                    arrayOf("${content}还有", "${-count} 天", "时间：$year - ${month + 1} - $day")
                 }
             }
             2 -> {
@@ -115,7 +151,7 @@ data class EventBean(
         }
     }
 
-    fun getDaysFromNow(mYear: Int? = null, mMonth: Int? = null, mDay: Int? = null): Int {
+    private fun getDaysFromNow(mYear: Int? = null, mMonth: Int? = null, mDay: Int? = null): Int {
         val cal = Calendar.getInstance()
         val todayTimeInMillis = cal.timeInMillis
         when {

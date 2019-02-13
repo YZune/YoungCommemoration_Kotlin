@@ -59,7 +59,7 @@ class EventAppWidget : AppWidgetProvider() {
             context: Context, appWidgetManager: AppWidgetManager,
             appWidgetId: Int, event: EventBean, widget: SingleAppWidgetBean
         ) {
-            val mRemoteViews = RemoteViews(context.packageName, R.layout.event_app_widget)
+            val mRemoteViews = RemoteViews(context.packageName, R.layout.event_app_widget_0)
             val description = event.getDescriptionWithDays(context)
             mRemoteViews.setTextViewText(R.id.tv_event_widget, description[0])
             mRemoteViews.setTextViewText(R.id.tv_days_widget, description[1])
@@ -80,11 +80,6 @@ class EventAppWidget : AppWidgetProvider() {
             } else {
                 mRemoteViews.setViewVisibility(R.id.iv_widget, View.GONE)
             }
-//            if (widget.withShadow) {
-//                mRemoteViews.setFloat(R.id.ll_background, "setTranslationZ", context.dip(4).toFloat())
-//            } else {
-//                mRemoteViews.setFloat(R.id.ll_background, "setTranslationZ", 0f)
-//            }
             mRemoteViews.setInt(R.id.ll_background, "setBackgroundColor", widget.bgColor)
             mRemoteViews.setTextColor(R.id.tv_event_widget, widget.textColor)
             mRemoteViews.setTextColor(R.id.tv_days_widget, widget.textColor)

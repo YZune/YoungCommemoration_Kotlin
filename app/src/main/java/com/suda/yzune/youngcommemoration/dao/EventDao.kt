@@ -13,6 +13,9 @@ interface EventDao {
     @Update
     fun update(event: EventBean)
 
+    @Update
+    fun updateEvents(events: List<EventBean>)
+
     @Delete
     fun delete(event: EventBean)
 
@@ -33,4 +36,5 @@ interface EventDao {
 
     @Insert
     fun insertList(events: List<EventBean>)
+
 }

@@ -196,13 +196,20 @@
 
             <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_events"
-                    android:paddingBottom="56dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:nestedScrollingEnabled="false"
                     tools:listitem="@layout/item_event"/>
 
         </android.support.v4.widget.NestedScrollView>
+
+        <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/progress_bar"
+                android:layout_gravity="center"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+        />
 
     </android.support.design.widget.CoordinatorLayout>
 

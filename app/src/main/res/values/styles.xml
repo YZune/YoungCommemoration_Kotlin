@@ -23,4 +23,14 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="CheckableButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:background">@drawable/custom_item_bg</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
 </resources>

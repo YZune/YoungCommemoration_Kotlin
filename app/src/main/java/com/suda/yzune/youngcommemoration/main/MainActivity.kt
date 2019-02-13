@@ -14,10 +14,15 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
+import com.chad.library.adapter.base.listener.OnItemDragListener
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.gson.Gson
@@ -62,7 +67,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         resizeMarginTop()
         initView()
-        initEven()
+        initEvent()
         initNavView()
         MyRetrofitUtils.instance.getService().getUpdateInfo().enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {}
@@ -93,6 +98,7 @@ class MainActivity : BaseActivity() {
             )
                 .show(supportFragmentManager, null)
         }
+        viewModel.sortTypeLiveData.value = PreferenceUtils.getIntFromSP(this@MainActivity, "sortType", 0)
     }
 
     override fun onStart() {
@@ -273,6 +279,16 @@ class MainActivity : BaseActivity() {
         adapter.setOnItemClickListener { _, _, position ->
             startActivity<AddEventActivity>("event" to viewModel.showList[position])
         }
+        adapter.addHeaderView(UI {
+            view {
+                minimumHeight = dip(24)
+            }
+        }.view)
+        adapter.addFooterView(UI {
+            view {
+                minimumHeight = dip(56)
+            }
+        }.view)
         adapter.emptyView = UI {
             frameLayout {
 
@@ -295,11 +311,77 @@ class MainActivity : BaseActivity() {
         }.view
         rv_events.layoutManager = LinearLayoutManager(this)
         rv_events.adapter = adapter
-        viewModel.getAllEvents().observe(this, Observer {
-            if (it == null) return@Observer
+        val itemDragAndSwipeCallback = ItemDragAndSwipeCallback(adapter)
+        val itemTouchHelper = ItemTouchHelper(itemDragAndSwipeCallback)
+        itemTouchHelper.attachToRecyclerView(rv_events)
+        val onItemDragListener = object : OnItemDragListener {
+
+            override fun onItemDragMoving(
+                source: RecyclerView.ViewHolder,
+                from: Int,
+                target: RecyclerView.ViewHolder,
+                to: Int
+            ) {
+            }
+
+            override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {
+                if (viewModel.sortTypeLiveData.value != 1) {
+                    contentView!!.longSnackbar("在当前的排序方式下更改不会保存哦，请在右上角切换")
+                }
+            }
+
+            override fun onItemDragEnd(viewHolder: RecyclerView.ViewHolder, pos: Int) {
+                if (viewModel.sortTypeLiveData.value == 1) {
+                    launch {
+                        progress_bar.visibility = View.VISIBLE
+                        window.setFlags(
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                        )
+                        val task = withContext(Dispatchers.IO) {
+                            try {
+                                viewModel.showList.forEachIndexed { index, eventBean ->
+                                    eventBean.sortNum = index
+                                }
+                                viewModel.updateEvents(viewModel.showList)
+                                "ok"
+                            } catch (e: Exception) {
+                                "发生异常>_<" + e.message
+                            }
+                        }
+                        if (task != "ok") {
+                            longToast(task)
+                        }
+                        progress_bar.visibility = View.GONE
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                    }
+                }
+            }
+        }
+        adapter.enableDragItem(itemTouchHelper)
+        adapter.setOnItemDragListener(onItemDragListener)
+        viewModel.getAllEvents().observe(this, Observer { list ->
+            if (list == null) return@Observer
             viewModel.showList.clear()
-            viewModel.showList.addAll(it)
+            viewModel.showList.addAll(list)
+            when (viewModel.sortTypeLiveData.value) {
+                0 -> viewModel.showList.sortBy { it.id }
+                1 -> viewModel.showList.sortBy { it.sortNum }
+                2 -> viewModel.showList.sortBy { Math.abs(it.count) }
+                3 -> viewModel.showList.sortByDescending { Math.abs(it.count) }
+            }
             adapter.notifyDataSetChanged()
+        })
+        viewModel.sortTypeLiveData.observe(this, Observer { i ->
+            if (i == null) return@Observer
+            when (i) {
+                0 -> viewModel.showList.sortBy { it.id }
+                1 -> viewModel.showList.sortBy { it.sortNum }
+                2 -> viewModel.showList.sortBy { Math.abs(it.count) }
+                3 -> viewModel.showList.sortByDescending { Math.abs(it.count) }
+            }
+            adapter.notifyDataSetChanged()
+            PreferenceUtils.saveIntToSP(this, "sortType", i)
         })
     }
 
@@ -308,7 +390,7 @@ class MainActivity : BaseActivity() {
         (toolbar.layoutParams as FrameLayout.LayoutParams).topMargin = statusBarMargin
     }
 
-    private fun initEven() {
+    private fun initEvent() {
         tv_nav.setOnClickListener {
             drawer_layout.openDrawer(GravityCompat.START)
         }
@@ -322,7 +404,7 @@ class MainActivity : BaseActivity() {
         }
 
         tv_sort.setOnClickListener {
-            it.longSnackbar("正在开发中哦<(￣︶￣)>")
+            SortFragment().show(supportFragmentManager, null)
         }
 
         appbar_layout.addOnOffsetChangedListener(

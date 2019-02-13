@@ -2,7 +2,6 @@ package com.suda.yzune.youngcommemoration.main
 
 import android.support.v4.content.ContextCompat
 import android.view.View
-import android.widget.LinearLayout
 import com.chad.library.adapter.base.BaseItemDraggableAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.github.florent37.glidepalette.GlidePalette
@@ -12,15 +11,11 @@ import com.suda.yzune.youngcommemoration.R
 import com.suda.yzune.youngcommemoration.bean.EventBean
 import jp.wasabeef.glide.transformations.BlurTransformation
 import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.dip
 
 class EventListAdapter(layoutResId: Int, data: MutableList<EventBean>) :
     BaseItemDraggableAdapter<EventBean, BaseViewHolder>(layoutResId, data) {
 
     override fun convert(helper: BaseViewHolder, item: EventBean) {
-        if (helper.layoutPosition == 0) {
-            (helper.getView<View>(R.id.cv_event).layoutParams as LinearLayout.LayoutParams).topMargin = mContext.dip(24)
-        }
         val description = item.getDescriptionWithDays(mContext)
         helper.setText(R.id.tv_content, description[0])
         helper.setText(R.id.tv_count, description[1])

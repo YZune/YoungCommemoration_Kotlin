@@ -32,8 +32,8 @@
     <android.support.design.chip.ChipGroup
             android:id="@+id/cg_type"
             app:singleSelection="true"
-
-            app:chipSpacing="8dp"
+            app:chipSpacingHorizontal="0dp"
+            app:chipSpacingVertical="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

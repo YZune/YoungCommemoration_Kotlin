@@ -25,14 +25,18 @@ class SelectDayDialog : BaseDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (viewModel.event.type == 2) {
-            tv_title.text = "选择农历日期"
+            tv_title.text = "选择农历出生日期"
             val cal = ChineseCalendar()
             cal.set(ChineseCalendar.CHINESE_YEAR, viewModel.event.year)
             cal.set(ChineseCalendar.CHINESE_MONTH, viewModel.event.month + 1)
             cal.set(ChineseCalendar.CHINESE_DATE, viewModel.event.day)
             calendar_view.init(cal, false)
         } else {
-            tv_title.text = "选择日期"
+            if (viewModel.event.type == 1) {
+                tv_title.text = "选择出生日期"
+            } else {
+                tv_title.text = "选择日期"
+            }
             val cal = Calendar.getInstance()
             cal.set(viewModel.event.year, viewModel.event.month, viewModel.event.day)
             calendar_view.init(cal)

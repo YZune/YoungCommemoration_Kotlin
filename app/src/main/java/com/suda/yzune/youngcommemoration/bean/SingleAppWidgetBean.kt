@@ -18,7 +18,7 @@ data class SingleAppWidgetBean(
     var id: Int = 0,
     var eventId: Int = -1,
     var withPic: Boolean = true,
-    var withShadow: Boolean = true,
+    var weight: Int = 1,
     var bgColor: Int = 0xffffffff.toInt(),
     var textColor: Int = 0xff000000.toInt()
 )
