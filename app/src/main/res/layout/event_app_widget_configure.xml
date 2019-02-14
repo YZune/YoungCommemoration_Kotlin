@@ -16,22 +16,13 @@
     <TextView
             android:textSize="12sp"
             android:layout_marginTop="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="大小仅供参考，放置后可自己调整"/>
-
-    <TextView
-            android:textSize="12sp"
-            android:lineSpacingExtra="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:lineSpacingExtra="2dp"
             android:layout_marginEnd="16dp"
-            android:text="卡片阴影会跟随背景透明度变淡，阴影的实际效果跟下图有区别"/>
+            android:text="大小仅供参考，放置后可自己调整\n现在点击放好的小部件可以重新编辑了哦"/>
 
     <FrameLayout
             android:layout_width="match_parent"
@@ -45,8 +36,16 @@
                 android:layout_height="match_parent"/>
 
         <include
+                android:id="@+id/ly_widget_1"
                 android:layout_gravity="center"
                 layout="@layout/event_app_widget_1"
+                android:layout_height="180dp"
+                android:layout_width="250dp"/>
+
+        <include
+                android:id="@+id/ly_widget_0"
+                android:layout_gravity="center"
+                layout="@layout/event_app_widget_0"
                 android:layout_height="180dp"
                 android:layout_width="250dp"/>
 
@@ -113,7 +112,7 @@
                 android:layout_marginEnd="8dp"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:text="1 : 1"
+                android:text="0 : 1"
                 android:lines="1"
                 android:textSize="14sp"/>
 
@@ -125,6 +124,16 @@
                 android:layout_height="match_parent"/>
 
     </LinearLayout>
+
+    <TextView
+            android:textSize="12sp"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginBottom="8dp"
+            android:text="0 : 1 的效果为文字覆盖在图片上方。其他比例在预览时按 1 : 1 的效果呈现，放置桌面后才会产生不同效果。"
+            android:layout_marginStart="56dp"
+            android:layout_marginEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     <LinearLayout
             android:id="@+id/ll_bg_color"

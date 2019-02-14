@@ -9,7 +9,7 @@ import com.suda.yzune.youngcommemoration.bean.SingleAppWidgetBean
 class AppWidgetConfigureViewModel(application: Application) : AndroidViewModel(application) {
 
     var selectedEvent: EventBean? = null
-    val widgetBean = SingleAppWidgetBean()
+    var widgetBean = SingleAppWidgetBean()
     val showList = arrayListOf<EventBean>()
     private val dataBase = AppDatabase.getDatabase(application)
     private val eventDao = dataBase.eventDao()
@@ -21,5 +21,9 @@ class AppWidgetConfigureViewModel(application: Application) : AndroidViewModel(a
 
     suspend fun insertWidget() {
         widgetDao.insert(widgetBean)
+    }
+
+    suspend fun updateWidget() {
+        widgetDao.update(widgetBean)
     }
 }

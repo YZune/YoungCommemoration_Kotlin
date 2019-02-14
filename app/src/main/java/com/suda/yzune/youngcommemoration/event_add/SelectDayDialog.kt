@@ -30,7 +30,12 @@ class SelectDayDialog : BaseDialogFragment() {
             cal.set(ChineseCalendar.CHINESE_YEAR, viewModel.event.year)
             cal.set(ChineseCalendar.CHINESE_MONTH, viewModel.event.month + 1)
             cal.set(ChineseCalendar.CHINESE_DATE, viewModel.event.day)
-            calendar_view.init(cal, false)
+            try {
+                calendar_view.init(cal, false)
+            } catch (e: Exception) {
+                cal.set(ChineseCalendar.CHINESE_DATE, 1)
+                calendar_view.init(cal, false)
+            }
         } else {
             if (viewModel.event.type == 1) {
                 tv_title.text = "选择出生日期"

@@ -13,7 +13,6 @@ import com.suda.yzune.youngcommemoration.GlideApp
 import com.suda.yzune.youngcommemoration.R
 import com.suda.yzune.youngcommemoration.bean.EventBean
 import com.suda.yzune.youngcommemoration.bean.SingleAppWidgetBean
-import com.suda.yzune.youngcommemoration.main.MainActivity
 import kotlinx.coroutines.*
 
 /**
@@ -59,7 +58,7 @@ class EventAppWidget : AppWidgetProvider() {
             context: Context, appWidgetManager: AppWidgetManager,
             appWidgetId: Int, event: EventBean, widget: SingleAppWidgetBean
         ) {
-            val mRemoteViews = RemoteViews(context.packageName, R.layout.event_app_widget_0)
+            val mRemoteViews = RemoteViews(context.packageName, R.layout.event_app_widget_0 + widget.weight)
             val description = event.getDescriptionWithDays(context)
             mRemoteViews.setTextViewText(R.id.tv_event_widget, description[0])
             mRemoteViews.setTextViewText(R.id.tv_days_widget, description[1])
@@ -84,8 +83,10 @@ class EventAppWidget : AppWidgetProvider() {
             mRemoteViews.setTextColor(R.id.tv_event_widget, widget.textColor)
             mRemoteViews.setTextColor(R.id.tv_days_widget, widget.textColor)
             mRemoteViews.setTextColor(R.id.tv_event_msg, widget.textColor)
-            val intent = Intent(context, MainActivity::class.java)
-            val pIntent = PendingIntent.getActivity(context, 0, intent, 0)
+            val intent = Intent(context, EventAppWidgetConfigureActivity::class.java)
+            intent.putExtra("modify", true)
+            intent.putExtra("widgetData", widget)
+            val pIntent = PendingIntent.getActivity(context, widget.id, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             mRemoteViews.setOnClickPendingIntent(R.id.ll_background, pIntent)
             appWidgetManager.updateAppWidget(appWidgetId, mRemoteViews)
         }
