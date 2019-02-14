@@ -100,14 +100,14 @@ data class EventBean(
             1 -> {
                 val curYear = Calendar.getInstance().get(Calendar.YEAR)
                 var durYears = curYear - year
-                count = getDaysFromNow(curYear)
-                count = if (count > 0) {
+                var c = getDaysFromNow(curYear)
+                c = if (c > 0) {
                     durYears++
                     -getDaysFromNow(curYear + 1)
                 } else {
-                    -count
+                    -c
                 }
-                arrayOf("${content}的 $durYears 岁生日", "还有 $count 天", "生日：$year - ${month + 1} - $day")
+                arrayOf("${content}的 $durYears 岁生日", "还有 $c 天", "生日：$year - ${month + 1} - $day")
             }
             3 -> {
                 if (count > 0) {
@@ -130,18 +130,18 @@ data class EventBean(
                 var durYears = lunarNow.lunarYear - lunarBirth.lunarYear
                 lunarBirth.lunarYear = lunarNow.lunarYear
                 var solarBirth = LunarUtils.lunarToSolar(lunarBirth)
-                count = getDaysFromNow(solarBirth.solarYear, solarBirth.solarMonth - 1, solarBirth.solarDay)
+                var c = getDaysFromNow(solarBirth.solarYear, solarBirth.solarMonth - 1, solarBirth.solarDay)
                 Log.d("生日", "${solarBirth.solarYear}, ${solarBirth.solarMonth}, ${solarBirth.solarDay}")
-                if (count > 0) {
+                if (c > 0) {
                     durYears++
                     lunarBirth.lunarYear = lunarNow.lunarYear + 1
                     solarBirth = LunarUtils.lunarToSolar(lunarBirth)
-                    count = -getDaysFromNow(solarBirth.solarYear, solarBirth.solarMonth - 1, solarBirth.solarDay)
+                    c = -getDaysFromNow(solarBirth.solarYear, solarBirth.solarMonth - 1, solarBirth.solarDay)
                 } else {
-                    count = -count
+                    c = -c
                 }
                 arrayOf(
-                    "${content}的 $durYears 岁农历生日", "还有 $count 天",
+                    "${content}的 $durYears 岁农历生日", "还有 $c 天",
                     "对应新历：${solarBirth.solarYear} - ${solarBirth.solarMonth} - ${solarBirth.solarDay}"
                 )
             }
