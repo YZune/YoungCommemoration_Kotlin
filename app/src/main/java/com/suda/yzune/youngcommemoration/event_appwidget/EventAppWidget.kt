@@ -80,6 +80,9 @@ class EventAppWidget : AppWidgetProvider() {
                 mRemoteViews.setViewVisibility(R.id.iv_widget, View.GONE)
             }
             mRemoteViews.setInt(R.id.ll_background, "setBackgroundColor", widget.bgColor)
+            if (widget.weight == 0) {
+                mRemoteViews.setInt(R.id.rl_background, "setBackgroundColor", widget.bgColor)
+            }
             mRemoteViews.setTextColor(R.id.tv_event_widget, widget.textColor)
             mRemoteViews.setTextColor(R.id.tv_days_widget, widget.textColor)
             mRemoteViews.setTextColor(R.id.tv_event_msg, widget.textColor)

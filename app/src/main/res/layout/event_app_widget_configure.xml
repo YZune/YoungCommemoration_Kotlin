@@ -129,7 +129,7 @@
             android:textSize="12sp"
             android:lineSpacingExtra="2dp"
             android:layout_marginBottom="8dp"
-            android:text="0 : 1 的效果为文字覆盖在图片上方。其他比例在预览时按 1 : 1 的效果呈现，放置桌面后才会产生不同效果。"
+            android:text="0 : 1 的效果为文字覆盖在图片上方。拉到最大是自适应模式。其他比例在预览时按 1 : 1 的效果呈现，放置桌面后才会产生不同效果。"
             android:layout_marginStart="56dp"
             android:layout_marginEnd="16dp"
             android:layout_width="match_parent"

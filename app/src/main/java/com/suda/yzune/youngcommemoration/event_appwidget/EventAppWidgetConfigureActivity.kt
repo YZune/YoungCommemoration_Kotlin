@@ -165,7 +165,11 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
         sb_weight.max = 9
         sb_weight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                tv_weight.text = "$progress : 1"
+                if (progress == 9) {
+                    tv_weight.text = "自适应"
+                } else {
+                    tv_weight.text = "$progress : 1"
+                }
                 viewModel.widgetBean.weight = progress
                 if (progress == 0) {
                     ly_widget_0.visibility = View.VISIBLE
@@ -190,6 +194,7 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
                     //ll_event_info.backgroundColor = colorInt
                     ly_widget_1.find<LinearLayout>(R.id.ll_background).backgroundColor = colorInt
                     ly_widget_0.find<LinearLayout>(R.id.ll_background).backgroundColor = colorInt
+                    ly_widget_0.find<LinearLayout>(R.id.rl_background).backgroundColor = colorInt
                 }
                 .build()
                 .show()
@@ -233,6 +238,23 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
                     longToast("该事件已经被删除了哦，请重新添加一个小插件吧")
                     finish()
                     return@launch
+                }
+                ly_widget_1.find<LinearLayout>(R.id.ll_background).backgroundColor = viewModel.widgetBean.bgColor
+                ly_widget_0.find<LinearLayout>(R.id.ll_background).backgroundColor = viewModel.widgetBean.bgColor
+                ly_widget_0.find<LinearLayout>(R.id.rl_background).backgroundColor = viewModel.widgetBean.bgColor
+                val llInfo0 = ly_widget_0.find<LinearLayout>(R.id.ll_event_info)
+                for (i in 0 until llInfo0.childCount) {
+                    val v = llInfo0.getChildAt(i)
+                    if (v is TextView) {
+                        v.textColor = viewModel.widgetBean.textColor
+                    }
+                }
+                val llInfo1 = ly_widget_1.find<LinearLayout>(R.id.ll_event_info)
+                for (i in 0 until llInfo1.childCount) {
+                    val v = llInfo1.getChildAt(i)
+                    if (v is TextView) {
+                        v.textColor = viewModel.widgetBean.textColor
+                    }
                 }
                 setPreviewContent()
                 sb_weight.progress = viewModel.widgetBean.weight
