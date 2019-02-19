@@ -19,6 +19,7 @@ android {
         targetSdkVersion 28
         versionCode 15
         versionName "2.16"
+        flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,6 +28,22 @@ android {
             minifyEnabled false
             proguardFile 'proguard-android.txt'
             proguardFile 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        qq {
+            resValue "string", "app_name", "Young纪念日"
+            //AndroidManifest.xml中定义的meta-data标签,
+            //需要和meta-data中的android:value="${CHANNEL}对应
+            manifestPlaceholders = [CHANNEL: "qq"]
+            //Build中生成一个字符用来区分不同渠道的不同策略
+            buildConfigField "String", "CHANNEL", "\"qq\""
+        }
+        normal {
+            resValue "string", "app_name", "咩咩"
+            manifestPlaceholders = [CHANNEL: "normal"]
+            buildConfigField "String", "CHANNEL", "\"normal\""
         }
     }
 }

@@ -18,6 +18,11 @@
             tools:ignore="GoogleAppIndexingWarning"
             tools:replace="android:allowBackup"
             tools:targetApi="n">
+
+        <meta-data
+                android:name="CHANNEL"
+                android:value="${CHANNEL}"/>
+
         <activity android:name=".share.ShareEventActivity"
                   android:label="分享">
         </activity>
