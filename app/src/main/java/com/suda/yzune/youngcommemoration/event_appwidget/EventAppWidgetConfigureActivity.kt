@@ -7,6 +7,8 @@ import android.appwidget.AppWidgetManager
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -14,10 +16,7 @@ import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import com.suda.yzune.youngcommemoration.GlideApp
@@ -147,8 +146,34 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
     }
 
     private fun initEvent() {
+
+        ctv_event.setOnClickListener {
+            ctv_event.toCheckedStyle()
+            ctv_days.toNormalStyle()
+            ctv_msg.toNormalStyle()
+            sb_size.progress = viewModel.widgetBean.contentSize - 10
+        }
+
+        ctv_days.setOnClickListener {
+            ctv_days.toCheckedStyle()
+            ctv_event.toNormalStyle()
+            ctv_msg.toNormalStyle()
+            sb_size.progress = viewModel.widgetBean.daySize - 10
+        }
+
+        ctv_msg.setOnClickListener {
+            ctv_msg.toCheckedStyle()
+            ctv_event.toNormalStyle()
+            ctv_days.toNormalStyle()
+            sb_size.progress = viewModel.widgetBean.msgSize - 10
+        }
+
         ll_with_pic.setOnClickListener {
             s_pic.isChecked = !s_pic.isChecked
+        }
+
+        ll_horizontal.setOnClickListener {
+            s_horizontal.isChecked = !s_horizontal.isChecked
         }
 
         s_pic.setOnCheckedChangeListener { _, isChecked ->
@@ -159,6 +184,28 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
             } else {
                 ly_widget_0.find<View>(R.id.iv_widget).visibility = View.GONE
                 ly_widget_1.find<View>(R.id.iv_widget).visibility = View.GONE
+            }
+        }
+
+        s_horizontal.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.widgetBean.textHorizontal = isChecked
+            if (isChecked) {
+                ly_widget_0.find<View>(R.id.tv_days_widget).visibility = View.GONE
+                ly_widget_1.find<View>(R.id.tv_days_widget).visibility = View.GONE
+            } else {
+                ly_widget_0.find<View>(R.id.tv_days_widget).visibility = View.VISIBLE
+                ly_widget_1.find<View>(R.id.tv_days_widget).visibility = View.VISIBLE
+            }
+            if (viewModel.selectedEvent != null) {
+                setPreviewContent()
+            } else {
+                if (isChecked) {
+                    ly_widget_0.find<TextView>(R.id.tv_event_widget).text = "「咩咩出生」365天"
+                    ly_widget_1.find<TextView>(R.id.tv_event_widget).text = "「咩咩出生」365天"
+                } else {
+                    ly_widget_0.find<TextView>(R.id.tv_event_widget).text = "「咩咩出生」"
+                    ly_widget_1.find<TextView>(R.id.tv_event_widget).text = "「咩咩出生」"
+                }
             }
         }
 
@@ -178,6 +225,39 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
                     ly_widget_0.visibility = View.GONE
                     ly_widget_1.visibility = View.VISIBLE
                 }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+
+        })
+
+        sb_size.max = 15
+        sb_size.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                when {
+                    ctv_days.isChecked -> {
+                        viewModel.widgetBean.daySize = progress + 10
+                        ly_widget_0.find<TextView>(R.id.tv_days_widget).textSize =
+                            viewModel.widgetBean.daySize.toFloat()
+                        ly_widget_1.find<TextView>(R.id.tv_days_widget).textSize =
+                            viewModel.widgetBean.daySize.toFloat()
+                    }
+                    ctv_event.isChecked -> {
+                        viewModel.widgetBean.contentSize = progress + 10
+                        ly_widget_0.find<TextView>(R.id.tv_event_widget).textSize =
+                            viewModel.widgetBean.contentSize.toFloat()
+                        ly_widget_1.find<TextView>(R.id.tv_event_widget).textSize =
+                            viewModel.widgetBean.contentSize.toFloat()
+                    }
+                    ctv_msg.isChecked -> {
+                        viewModel.widgetBean.msgSize = progress + 10
+                        ly_widget_0.find<TextView>(R.id.tv_event_msg).textSize = viewModel.widgetBean.msgSize.toFloat()
+                        ly_widget_1.find<TextView>(R.id.tv_event_msg).textSize = viewModel.widgetBean.msgSize.toFloat()
+                    }
+                }
+                tv_size.text = "${progress + 10}sp"
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -225,6 +305,18 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
         }
     }
 
+    private fun CheckedTextView.toCheckedStyle() {
+        this.typeface = Typeface.DEFAULT_BOLD
+        this.textColorResource = R.color.colorAccent
+        this.isChecked = true
+    }
+
+    private fun CheckedTextView.toNormalStyle() {
+        this.typeface = Typeface.DEFAULT
+        this.textColor = Color.BLACK
+        this.isChecked = false
+    }
+
     private fun initList() {
         launch {
             viewModel.showList.addAll(withContext(Dispatchers.IO) {
@@ -259,6 +351,9 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
                 setPreviewContent()
                 sb_weight.progress = viewModel.widgetBean.weight
                 s_pic.isChecked = viewModel.widgetBean.withPic
+                s_horizontal.isChecked = viewModel.widgetBean.textHorizontal
+                ctv_event.isChecked = true
+                sb_size.progress = viewModel.widgetBean.contentSize - 10
             }
             val adapter = EventListAdapter(R.layout.item_event, viewModel.showList)
             adapter.setOnItemClickListener { _, _, position ->
@@ -294,14 +389,27 @@ class EventAppWidgetConfigureActivity : BaseTitleActivity() {
 
     private fun setPreviewContent() {
         val description = viewModel.selectedEvent!!.getDescriptionWithDays(this)
-        ly_widget_0.find<TextView>(R.id.tv_event_widget).text = description[0]
+
+        ly_widget_0.find<TextView>(R.id.tv_event_widget).textSize = viewModel.widgetBean.contentSize.toFloat()
+        ly_widget_1.find<TextView>(R.id.tv_event_widget).textSize = viewModel.widgetBean.contentSize.toFloat()
+        if (viewModel.widgetBean.textHorizontal) {
+            ly_widget_0.find<TextView>(R.id.tv_event_widget).text = description[0] + description[1]
+            ly_widget_1.find<TextView>(R.id.tv_event_widget).text = description[0] + description[1]
+        } else {
+            ly_widget_0.find<TextView>(R.id.tv_event_widget).text = description[0]
+            ly_widget_1.find<TextView>(R.id.tv_event_widget).text = description[0]
+        }
+
+        ly_widget_0.find<TextView>(R.id.tv_days_widget).textSize = viewModel.widgetBean.daySize.toFloat()
+        ly_widget_1.find<TextView>(R.id.tv_days_widget).textSize = viewModel.widgetBean.daySize.toFloat()
         ly_widget_0.find<TextView>(R.id.tv_days_widget).text = description[1]
-        ly_widget_1.find<TextView>(R.id.tv_event_widget).text = description[0]
         ly_widget_1.find<TextView>(R.id.tv_days_widget).text = description[1]
         if (viewModel.selectedEvent!!.msg.isBlank()) {
             ly_widget_0.find<TextView>(R.id.tv_event_msg).visibility = View.GONE
             ly_widget_1.find<TextView>(R.id.tv_event_msg).visibility = View.GONE
         } else {
+            ly_widget_0.find<TextView>(R.id.tv_event_msg).textSize = viewModel.widgetBean.msgSize.toFloat()
+            ly_widget_1.find<TextView>(R.id.tv_event_msg).textSize = viewModel.widgetBean.msgSize.toFloat()
             ly_widget_0.find<TextView>(R.id.tv_event_msg).visibility = View.VISIBLE
             ly_widget_0.find<TextView>(R.id.tv_event_msg).text = viewModel.selectedEvent!!.msg
             ly_widget_1.find<TextView>(R.id.tv_event_msg).visibility = View.VISIBLE

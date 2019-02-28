@@ -12,7 +12,13 @@
             style="@style/CheckableButtonStyle"
             android:layout_marginTop="8dp"
             android:id="@+id/btn_add_time"
-            android:text="按添加时间"/>
+            android:text="按添加时间从旧到新"/>
+
+    <CheckedTextView
+            style="@style/CheckableButtonStyle"
+            android:layout_marginTop="8dp"
+            android:id="@+id/btn_add_time_desc"
+            android:text="按添加时间从新到旧"/>
 
     <CheckedTextView
             android:id="@+id/btn_self"

@@ -13,7 +13,7 @@ import com.suda.yzune.youngcommemoration.dao.SingleWidgetDao
 
 @Database(
     entities = [EventBean::class, SingleAppWidgetBean::class],
-    version = 2, exportSchema = false
+    version = 3, exportSchema = false
 )
 
 abstract class AppDatabase : RoomDatabase() {
@@ -29,6 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
                             AppDatabase::class.java, "young.db"
                         )
                             .addMigrations(migration1to2)
+                            .addMigrations(migration2to3)
                             .build()
                     }
                 }
@@ -45,6 +46,15 @@ abstract class AppDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE SingleAppWidgetBean RENAME TO SingleAppWidgetBean_old;")
                 database.execSQL("CREATE TABLE SingleAppWidgetBean(id INTEGER NOT NULL, eventId INTEGER NOT NULL, withPic INTEGER NOT NULL, weight INTEGER NOT NULL, bgColor INTEGER NOT NULL, textColor INTEGER NOT NULL, PRIMARY KEY (id), FOREIGN KEY (eventId) REFERENCES EventBean (id) ON DELETE CASCADE ON UPDATE CASCADE);")
                 database.execSQL("INSERT INTO SingleAppWidgetBean (id, eventId, withPic, weight, bgColor, textColor) SELECT id, eventId, withPic, 1, bgColor, textColor FROM SingleAppWidgetBean_old;")
+                database.execSQL("DROP TABLE SingleAppWidgetBean_old;")
+            }
+        }
+
+        private val migration2to3: Migration = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE SingleAppWidgetBean RENAME TO SingleAppWidgetBean_old;")
+                database.execSQL("CREATE TABLE SingleAppWidgetBean(id INTEGER NOT NULL, eventId INTEGER NOT NULL, withPic INTEGER NOT NULL, weight INTEGER NOT NULL, bgColor INTEGER NOT NULL, textColor INTEGER NOT NULL, textHorizontal INTEGER NOT NULL, contentSize INTEGER NOT NULL, daySize INTEGER NOT NULL, msgSize INTEGER NOT NULL, PRIMARY KEY (id), FOREIGN KEY (eventId) REFERENCES EventBean (id) ON DELETE CASCADE ON UPDATE CASCADE);")
+                database.execSQL("INSERT INTO SingleAppWidgetBean (id, eventId, withPic, weight, bgColor, textColor, textHorizontal, contentSize, daySize, msgSize) SELECT id, eventId, withPic, 1, bgColor, textColor, 0, 14, 20, 14 FROM SingleAppWidgetBean_old;")
                 database.execSQL("DROP TABLE SingleAppWidgetBean_old;")
             }
         }

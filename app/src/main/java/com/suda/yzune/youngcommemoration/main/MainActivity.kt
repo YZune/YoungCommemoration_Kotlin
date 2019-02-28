@@ -124,10 +124,11 @@ class MainActivity : BaseActivity() {
                     )
                 ) {
                     tv_plus.visibility = View.VISIBLE
+                    tv_days.setContent("${viewModel.favEvent!!.count + 1}")
                 } else {
                     tv_plus.visibility = View.GONE
+                    tv_days.setContent("${viewModel.favEvent!!.count}")
                 }
-                tv_days.setContent(viewModel.favEvent!!.count.toString())
                 tv_start_time.text = description[2]
                 tv_event_main.text = description[0] + " " + description[1]
                 GlideApp.with(this@MainActivity)
@@ -369,6 +370,7 @@ class MainActivity : BaseActivity() {
                 1 -> viewModel.showList.sortBy { it.sortNum }
                 2 -> viewModel.showList.sortBy { Math.abs(it.count) }
                 3 -> viewModel.showList.sortByDescending { Math.abs(it.count) }
+                4 -> viewModel.showList.sortByDescending { it.id }
             }
             adapter.notifyDataSetChanged()
         })
@@ -379,6 +381,7 @@ class MainActivity : BaseActivity() {
                 1 -> viewModel.showList.sortBy { it.sortNum }
                 2 -> viewModel.showList.sortBy { Math.abs(it.count) }
                 3 -> viewModel.showList.sortByDescending { Math.abs(it.count) }
+                4 -> viewModel.showList.sortByDescending { it.id }
             }
             adapter.notifyDataSetChanged()
             PreferenceUtils.saveIntToSP(this, "sortType", i)

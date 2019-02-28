@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.view.View
 import android.widget.RemoteViews
 import com.bumptech.glide.request.target.AppWidgetTarget
@@ -59,12 +60,21 @@ class EventAppWidget : AppWidgetProvider() {
             appWidgetId: Int, event: EventBean, widget: SingleAppWidgetBean
         ) {
             val mRemoteViews = RemoteViews(context.packageName, R.layout.event_app_widget_0 + widget.weight)
+            mRemoteViews.setTextViewTextSize(R.id.tv_event_widget, COMPLEX_UNIT_SP, widget.contentSize.toFloat())
             val description = event.getDescriptionWithDays(context)
-            mRemoteViews.setTextViewText(R.id.tv_event_widget, description[0])
-            mRemoteViews.setTextViewText(R.id.tv_days_widget, description[1])
+            if (widget.textHorizontal) {
+                mRemoteViews.setViewVisibility(R.id.tv_days_widget, View.GONE)
+                mRemoteViews.setTextViewText(R.id.tv_event_widget, description[0] + description[1])
+            } else {
+                mRemoteViews.setTextViewTextSize(R.id.tv_days_widget, COMPLEX_UNIT_SP, widget.daySize.toFloat())
+                mRemoteViews.setViewVisibility(R.id.tv_days_widget, View.VISIBLE)
+                mRemoteViews.setTextViewText(R.id.tv_event_widget, description[0])
+                mRemoteViews.setTextViewText(R.id.tv_days_widget, description[1])
+            }
             if (event.msg.isBlank()) {
                 mRemoteViews.setViewVisibility(R.id.tv_event_msg, View.GONE)
             } else {
+                mRemoteViews.setTextViewTextSize(R.id.tv_event_msg, COMPLEX_UNIT_SP, widget.msgSize.toFloat())
                 mRemoteViews.setViewVisibility(R.id.tv_event_msg, View.VISIBLE)
                 mRemoteViews.setTextViewText(R.id.tv_event_msg, event.msg)
             }

@@ -23,5 +23,9 @@ data class SingleAppWidgetBean(
     var withPic: Boolean = true,
     var weight: Int = 0,
     var bgColor: Int = 0x9affffff.toInt(),
-    var textColor: Int = 0xff000000.toInt()
+    var textColor: Int = 0xff000000.toInt(),
+    var textHorizontal: Boolean = false,
+    var contentSize: Int = 14,
+    var daySize: Int = 20,
+    var msgSize: Int = 14
 ) : Parcelable

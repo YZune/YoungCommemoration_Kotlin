@@ -40,7 +40,7 @@
                     android:layout_marginEnd="4dp"
                     android:gravity="center"
                     android:lineSpacingExtra="4dp"
-                    android:text="咩咩出生"/>
+                    android:text="「咩咩出生」"/>
 
             <TextView
                     android:textColor="@android:color/black"
