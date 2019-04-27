@@ -46,6 +46,7 @@
         </receiver>
 
         <activity
+                android:excludeFromRecents="true"
                 android:name=".event_appwidget.EventAppWidgetConfigureActivity"
                 android:label="小部件">
             <intent-filter>

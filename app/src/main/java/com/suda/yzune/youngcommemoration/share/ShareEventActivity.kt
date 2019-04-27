@@ -80,20 +80,23 @@ class ShareEventActivity : BaseTitleActivity() {
             ll_share.draw(c)
             val task = withContext(Dispatchers.IO) {
                 try {
-                    val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath
-                    val myDir = if (dir.endsWith(File.separator)) {
-                        "${dir}咩咩/"
-                    } else {
-                        "$dir/咩咩/"
-                    }
-                    val dirFile = File(myDir)
-                    if (!dirFile.exists()) {
-                        dirFile.mkdir()
-                    }
+                    val mPicDir =
+                        File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "咩咩")
+//                    val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath
+//                    val myDir = if (dir.endsWith(File.separator)) {
+//                        "${dir}咩咩/"
+//                    } else {
+//                        "$dir/咩咩/"
+//                    }
+//                    val dirFile = File(myDir)
+//                    if (!dirFile.exists()) {
+//                        dirFile.mkdir()
+//                    }
+                    mPicDir.mkdirs()
                     val mImageTime = System.currentTimeMillis()
                     val dateSeconds = mImageTime / 1000
                     val mImageFileName = "pic_$mImageTime.png"
-                    val mImageFilePath = myDir + mImageFileName
+                    val mImageFilePath = File(mPicDir, mImageFileName).absolutePath
                     val values = ContentValues()
                     values.put(MediaStore.Images.ImageColumns.DATA, mImageFilePath)
                     values.put(MediaStore.Images.ImageColumns.TITLE, mImageFileName)
@@ -119,10 +122,12 @@ class ShareEventActivity : BaseTitleActivity() {
                     contentResolver.update(uri, values, null, null)
                     mImageFilePath
                 } catch (e: Exception) {
-                    null
+                    "error: ${e.message}"
                 }
             }
-            if (task != null) {
+            if (task.startsWith("error:")) {
+                longToast("出现异常>_<\n$task")
+            } else {
                 longToast("已保存在相册「咩咩」中")
                 Share2.Builder(this@ShareEventActivity)
                     .setContentType(ShareContentType.FILE)
@@ -130,8 +135,6 @@ class ShareEventActivity : BaseTitleActivity() {
                     .setTitle("导出并分享")
                     .build()
                     .shareBySystem()
-            } else {
-                longToast("出现异常>_<\n$task")
             }
         }
 
