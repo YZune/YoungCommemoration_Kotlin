@@ -1,9 +1,9 @@
 package com.suda.yzune.youngcommemoration.event_add
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.BaseDialogFragment
 import android.view.View
+import androidx.fragment.app.BaseDialogFragment
 import cn.carbs.android.gregorianlunarcalendar.library.data.ChineseCalendar
 import com.suda.yzune.youngcommemoration.R
 import kotlinx.android.synthetic.main.fragment_select_day_dialog.*

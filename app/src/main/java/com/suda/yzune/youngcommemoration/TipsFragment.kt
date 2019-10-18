@@ -2,11 +2,11 @@ package com.suda.yzune.youngcommemoration
 
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.BaseDialogFragment
-import android.support.v4.text.HtmlCompat
+import androidx.core.text.HtmlCompat
 import android.text.Html
 import android.text.Spanned
 import android.view.View
+import androidx.fragment.app.BaseDialogFragment
 import com.suda.yzune.youngcommemoration.utils.PreferenceUtils
 import kotlinx.android.synthetic.main.fragment_tips.*
 

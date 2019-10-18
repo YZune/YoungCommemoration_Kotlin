@@ -28,14 +28,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cancel"
                 style="@style/DialogButtonStyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="取消"/>
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
                 style="@style/DialogButtonStyle"
                 android:layout_width="0dp"

@@ -1,12 +1,12 @@
 package com.suda.yzune.youngcommemoration.main
 
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.View
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.chad.library.adapter.base.BaseItemDraggableAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.github.florent37.glidepalette.GlidePalette
-import com.suda.yzune.youngcommemoration.GlideApp
-import com.suda.yzune.youngcommemoration.GlideOptions
 import com.suda.yzune.youngcommemoration.R
 import com.suda.yzune.youngcommemoration.bean.EventBean
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -28,14 +28,14 @@ class EventListAdapter(layoutResId: Int, data: MutableList<EventBean>) :
             helper.setText(R.id.tv_msg, item.msg)
         }
 
-        GlideApp.with(mContext)
+        Glide.with(mContext)
             .load(if (item.path.isBlank()) R.drawable.default_background else item.path)
             .override(300)
             .into(helper.getView(R.id.iv_pic))
-        GlideApp.with(mContext)
+        Glide.with(mContext)
             .load(if (item.path.isBlank()) R.drawable.default_background else item.path)
             .override(300)
-            .apply(GlideOptions.bitmapTransform(BlurTransformation(25))).listener(
+            .apply(bitmapTransform(BlurTransformation(25))).listener(
                 GlidePalette
                     .with(item.path)
                     .intoCallBack {

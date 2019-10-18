@@ -1,7 +1,7 @@
 package com.suda.yzune.youngcommemoration
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import com.suda.yzune.youngcommemoration.base_view.BaseTitleActivity

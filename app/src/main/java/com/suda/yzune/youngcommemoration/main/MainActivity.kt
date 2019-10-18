@@ -2,25 +2,26 @@ package com.suda.yzune.youngcommemoration.main
 
 import android.Manifest
 import android.app.Activity
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.GravityCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import com.google.android.material.appbar.AppBarLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
 import com.chad.library.adapter.base.listener.OnItemDragListener
 import com.github.florent37.glidepalette.BitmapPalette
@@ -131,7 +132,7 @@ class MainActivity : BaseActivity() {
                 }
                 tv_start_time.text = description[2]
                 tv_event_main.text = description[0] + " " + description[1]
-                GlideApp.with(this@MainActivity)
+                Glide.with(this@MainActivity)
                     .load(if (viewModel.favEvent!!.path.isBlank()) com.suda.yzune.youngcommemoration.R.drawable.default_background else viewModel.favEvent!!.path)
                     .override(600)
                     .listener(
@@ -310,7 +311,7 @@ class MainActivity : BaseActivity() {
                 }
             }
         }.view
-        rv_events.layoutManager = LinearLayoutManager(this)
+        rv_events.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         rv_events.adapter = adapter
         val itemDragAndSwipeCallback = ItemDragAndSwipeCallback(adapter)
         val itemTouchHelper = ItemTouchHelper(itemDragAndSwipeCallback)
@@ -318,20 +319,20 @@ class MainActivity : BaseActivity() {
         val onItemDragListener = object : OnItemDragListener {
 
             override fun onItemDragMoving(
-                source: RecyclerView.ViewHolder,
+                source: androidx.recyclerview.widget.RecyclerView.ViewHolder,
                 from: Int,
-                target: RecyclerView.ViewHolder,
+                target: androidx.recyclerview.widget.RecyclerView.ViewHolder,
                 to: Int
             ) {
             }
 
-            override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {
+            override fun onItemDragStart(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, pos: Int) {
                 if (viewModel.sortTypeLiveData.value != 1) {
                     contentView!!.longSnackbar("在当前的排序方式下更改不会保存哦，请在右上角切换")
                 }
             }
 
-            override fun onItemDragEnd(viewHolder: RecyclerView.ViewHolder, pos: Int) {
+            override fun onItemDragEnd(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, pos: Int) {
                 if (viewModel.sortTypeLiveData.value == 1) {
                     launch {
                         progress_bar.visibility = View.VISIBLE

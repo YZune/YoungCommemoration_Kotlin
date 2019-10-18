@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:background="@android:drawable/dialog_holo_light_frame"
                 android:id="@+id/cv_share"
                 android:elevation="8dp"
@@ -99,7 +99,7 @@
 
             </LinearLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
                 android:id="@+id/ll_logo"
@@ -197,7 +197,7 @@
                 android:lines="1"
                 android:textSize="14sp"/>
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
                 android:checked="true"
                 android:id="@+id/s_logo"
                 android:layout_marginEnd="16dp"
@@ -260,7 +260,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_events"
                 tools:listitem="@layout/item_event"
                 android:layout_width="match_parent"

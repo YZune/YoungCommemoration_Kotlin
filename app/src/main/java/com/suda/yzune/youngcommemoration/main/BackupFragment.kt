@@ -1,10 +1,10 @@
 package com.suda.yzune.youngcommemoration.main
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Environment
-import android.support.v4.app.BaseDialogFragment
 import android.view.View
+import androidx.fragment.app.BaseDialogFragment
 import com.nbsp.materialfilepicker.MaterialFilePicker
 import com.suda.yzune.youngcommemoration.R
 import gdut.bsx.share2.FileUtil

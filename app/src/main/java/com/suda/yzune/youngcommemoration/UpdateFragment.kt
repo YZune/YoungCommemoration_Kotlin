@@ -3,8 +3,8 @@ package com.suda.yzune.youngcommemoration
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.BaseDialogFragment
 import android.view.View
+import androidx.fragment.app.BaseDialogFragment
 import com.suda.yzune.youngcommemoration.bean.UpdateInfoBean
 import com.suda.yzune.youngcommemoration.utils.UpdateUtils
 import kotlinx.android.synthetic.main.fragment_update.*

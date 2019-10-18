@@ -1,7 +1,7 @@
 package com.suda.yzune.youngcommemoration.event_appwidget
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import androidx.lifecycle.AndroidViewModel
 import com.suda.yzune.youngcommemoration.AppDatabase
 import com.suda.yzune.youngcommemoration.bean.EventBean
 import com.suda.yzune.youngcommemoration.bean.SingleAppWidgetBean

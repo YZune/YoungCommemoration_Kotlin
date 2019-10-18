@@ -1,11 +1,11 @@
 package com.suda.yzune.youngcommemoration.main
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.BaseDialogFragment
 import android.view.View
 import android.widget.CheckedTextView
+import androidx.fragment.app.BaseDialogFragment
 import com.suda.yzune.youngcommemoration.R
 import kotlinx.android.synthetic.main.fragment_sort.*
 import org.jetbrains.anko.textColorResource

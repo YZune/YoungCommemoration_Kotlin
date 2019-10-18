@@ -2,22 +2,22 @@ package com.suda.yzune.youngcommemoration.event_add
 
 import android.Manifest
 import android.appwidget.AppWidgetManager
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.design.chip.Chip
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
+import com.google.android.material.chip.Chip
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.github.florent37.glidepalette.GlidePalette
-import com.suda.yzune.youngcommemoration.GlideApp
-import com.suda.yzune.youngcommemoration.GlideOptions.bitmapTransform
 import com.suda.yzune.youngcommemoration.R
 import com.suda.yzune.youngcommemoration.base_view.BaseTitleActivity
 import com.suda.yzune.youngcommemoration.bean.EventBean
@@ -25,6 +25,8 @@ import com.suda.yzune.youngcommemoration.event_appwidget.EventAppWidget
 import com.suda.yzune.youngcommemoration.utils.GlideAppEngine
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.ImageEngine
+import com.zhihu.matisse.engine.impl.GlideEngine
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.activity_add_event.*
 import kotlinx.android.synthetic.main.item_event.*
@@ -288,18 +290,18 @@ class AddEventActivity : BaseTitleActivity() {
 
     private fun showImage() {
         if (viewModel.event.path.isBlank()) {
-            GlideApp.with(this)
+            Glide.with(this)
                 .load(R.drawable.default_background)
                 .override(300)
                 .apply(bitmapTransform(BlurTransformation(25)))
                 .into(iv_pic_bg)
 
         } else {
-            GlideApp.with(this)
+            Glide.with(this)
                 .load(viewModel.event.path)
                 .override(300)
                 .into(iv_pic)
-            GlideApp.with(this)
+            Glide.with(this)
                 .load(viewModel.event.path)
                 .override(300)
                 .apply(bitmapTransform(BlurTransformation(25))).listener(

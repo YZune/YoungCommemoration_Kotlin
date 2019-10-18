@@ -29,7 +29,7 @@
             android:layout_marginTop="8dp"
             android:text="选择类型"/>
 
-    <android.support.design.chip.ChipGroup
+    <com.google.android.material.chip.ChipGroup
             android:id="@+id/cg_type"
             app:singleSelection="true"
             app:chipSpacingHorizontal="0dp"
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <android.support.design.chip.Chip
+        <com.google.android.material.chip.Chip
                 android:checkable="true"
                 android:textColor="@android:color/white"
                 app:chipBackgroundColor="@color/pink"
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <android.support.design.chip.Chip
+        <com.google.android.material.chip.Chip
                 android:id="@+id/chip_birth"
                 android:textColor="@android:color/white"
                 app:chipBackgroundColor="@color/colorAccent"
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <android.support.design.chip.Chip
+        <com.google.android.material.chip.Chip
                 android:id="@+id/chip_lunar_birth"
                 android:textColor="@android:color/white"
                 app:chipBackgroundColor="@color/orange"
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <android.support.design.chip.Chip
+        <com.google.android.material.chip.Chip
                 android:id="@+id/chip_rest"
                 android:textColor="@android:color/white"
                 app:chipBackgroundColor="@color/red"
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-    </android.support.design.chip.ChipGroup>
+    </com.google.android.material.chip.ChipGroup>
 
     <View
             android:layout_marginBottom="8dp"
@@ -211,14 +211,14 @@
                 android:lines="1"
                 android:textSize="14sp"/>
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/s_fav"
                 android:layout_marginEnd="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
 
-    <android.support.design.button.MaterialButton
+    <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_delete"
             android:visibility="gone"
             android:layout_marginTop="8dp"

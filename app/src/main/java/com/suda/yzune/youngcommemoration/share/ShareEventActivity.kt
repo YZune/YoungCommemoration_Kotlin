@@ -1,7 +1,7 @@
 package com.suda.yzune.youngcommemoration.share
 
 import android.Manifest
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -9,17 +9,17 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
-import com.suda.yzune.youngcommemoration.GlideApp
 import com.suda.yzune.youngcommemoration.R
 import com.suda.yzune.youngcommemoration.base_view.BaseTitleActivity
 import com.suda.yzune.youngcommemoration.event_appwidget.AppWidgetConfigureViewModel
@@ -213,7 +213,8 @@ class ShareEventActivity : BaseTitleActivity() {
                     }
                 }
             }.view
-            rv_events.layoutManager = LinearLayoutManager(this@ShareEventActivity)
+            rv_events.layoutManager =
+                androidx.recyclerview.widget.LinearLayoutManager(this@ShareEventActivity)
             rv_events.adapter = adapter
         }
     }
@@ -229,7 +230,7 @@ class ShareEventActivity : BaseTitleActivity() {
             tv_msg.visibility = View.VISIBLE
             tv_msg.text = viewModel.selectedEvent!!.msg
         }
-        GlideApp.with(this)
+        Glide.with(this)
             .load(if (viewModel.selectedEvent!!.path.isBlank()) R.drawable.default_background else viewModel.selectedEvent!!.path)
             .override(600)
             .into(iv_share)

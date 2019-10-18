@@ -3,8 +3,8 @@ package com.suda.yzune.youngcommemoration.base_view
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.constraint.ConstraintSet
+import androidx.annotation.LayoutRes
+import androidx.constraintlayout.widget.ConstraintSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater

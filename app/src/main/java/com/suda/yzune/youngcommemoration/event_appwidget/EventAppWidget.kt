@@ -8,9 +8,9 @@ import android.content.Intent
 import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.view.View
 import android.widget.RemoteViews
+import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.AppWidgetTarget
 import com.suda.yzune.youngcommemoration.AppDatabase
-import com.suda.yzune.youngcommemoration.GlideApp
 import com.suda.yzune.youngcommemoration.R
 import com.suda.yzune.youngcommemoration.bean.EventBean
 import com.suda.yzune.youngcommemoration.bean.SingleAppWidgetBean
@@ -81,7 +81,7 @@ class EventAppWidget : AppWidgetProvider() {
             if (widget.withPic) {
                 mRemoteViews.setViewVisibility(R.id.iv_widget, View.VISIBLE)
                 val appWidgetTarget = AppWidgetTarget(context, R.id.iv_widget, mRemoteViews, appWidgetId)
-                GlideApp.with(context)
+                Glide.with(context)
                     .asBitmap()
                     .load(if (event.path.isBlank()) R.drawable.default_background else event.path)
                     .override(300)

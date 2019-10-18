@@ -1,10 +1,10 @@
-package android.support.v4.app
+package androidx.fragment.app
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.design.card.MaterialCardView
+import androidx.annotation.LayoutRes
+import com.google.android.material.card.MaterialCardView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +44,7 @@ abstract class BaseDialogFragment : DialogFragment(), CoroutineScope {
         return root
     }
 
-    override fun show(manager: FragmentManager, tag: String?) {
+    override fun show(manager: androidx.fragment.app.FragmentManager, tag: String?) {
         mDismissed = false
         mShownByMe = true
         val ft = manager.beginTransaction()

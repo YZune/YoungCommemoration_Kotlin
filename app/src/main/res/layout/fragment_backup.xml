@@ -51,18 +51,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/tv_export"
                 style="@style/DialogButtonStyle"
                 android:layout_marginTop="8dp"
                 android:text="备份"/>
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/tv_share"
                 style="@style/DialogButtonStyle"
                 android:text="备份并分享文件"/>
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/tv_import"
                 style="@style/DialogButtonStyle"
                 android:layout_marginBottom="8dp"
@@ -77,28 +77,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/tv_default"
                 style="@style/DialogButtonStyle"
                 android:layout_marginTop="8dp"
                 android:text="从默认路径"/>
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/tv_qq"
                 style="@style/DialogButtonStyle"
                 android:text="从QQ接收路径"/>
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/tv_tim"
                 style="@style/DialogButtonStyle"
                 android:text="从Tim接收路径"/>
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/tv_wechat"
                 style="@style/DialogButtonStyle"
                 android:text="从微信接收路径"/>
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/tv_self"
                 style="@style/DialogButtonStyle"
                 android:layout_marginBottom="8dp"

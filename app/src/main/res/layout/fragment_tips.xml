@@ -49,7 +49,7 @@
                 android:textSize="12sp"/>
     </ScrollView>
 
-    <android.support.design.button.MaterialButton
+    <com.google.android.material.button.MaterialButton
             android:id="@+id/tv_visit"
             android:layout_width="160dp"
             android:layout_height="wrap_content"

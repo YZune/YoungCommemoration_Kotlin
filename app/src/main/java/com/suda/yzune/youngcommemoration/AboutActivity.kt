@@ -1,8 +1,9 @@
 package com.suda.yzune.youngcommemoration
 
 import android.os.Bundle
-import android.support.v4.content.res.ResourcesCompat
+import androidx.core.content.res.ResourcesCompat
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.suda.yzune.youngcommemoration.base_view.BaseTitleActivity
 import com.suda.yzune.youngcommemoration.utils.UpdateUtils
 import kotlinx.android.synthetic.main.activity_about.*
@@ -33,7 +34,7 @@ class AboutActivity : BaseTitleActivity() {
             e.printStackTrace()
         }
 
-        GlideApp.with(this)
+        Glide.with(this)
             .load("https://ws3.sinaimg.cn/large/006tNc79gy1fznkoyx8amj30u00u0wgl.jpg")
             .into(iv_share)
     }
