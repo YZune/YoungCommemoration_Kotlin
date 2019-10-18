@@ -1,49 +1,38 @@
 package com.suda.yzune.youngcommemoration.bean
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
 import android.content.Context
 import android.os.Parcelable
 import android.util.Log
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.suda.yzune.youngcommemoration.utils.LunarUtils
 import com.suda.yzune.youngcommemoration.utils.PreferenceUtils
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
+import kotlinx.serialization.Serializable
 import java.util.*
 
 @Parcelize
 @Entity
+@Serializable
 data class EventBean(
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
-    var content: String,
-    var year: Int,
-    var month: Int, //注意1月对应的值为0
-    var day: Int,
-    var type: Int,
-    var path: String,
-    var isFav: Boolean,
-    var msg: String,
+    var id: Int = 0,
+    var content: String = "",
+    var year: Int = 2019,
+    var month: Int = 0, //注意1月对应的值为0
+    var day: Int = 1,
+    var type: Int = 0,
+    var path: String = "",
+    var isFav: Boolean = false,
+    var msg: String = "",
     var sortNum: Int = 0
 ) : Parcelable {
 
-    constructor() : this(0, "", 0, 0, 0, 0, "", false, "")
-
-    constructor(
-        id: Int,
-        content: String,
-        year: Int,
-        month: Int,
-        day: Int,
-        type: Int,
-        path: String,
-        isFav: Boolean,
-        msg: String
-    ) : this(id, content, year, month, day, type, path, isFav, msg, 0)
-
     @IgnoredOnParcel
     @Ignore
+    @Transient
     var count: Int = 0
         get() = when (type) {
             1 -> {

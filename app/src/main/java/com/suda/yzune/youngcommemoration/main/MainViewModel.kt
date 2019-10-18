@@ -4,10 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.suda.yzune.youngcommemoration.AppDatabase
 import com.suda.yzune.youngcommemoration.bean.EventBean
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.list
 import java.io.File
 import java.util.*
 
@@ -16,6 +17,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val showList = arrayListOf<EventBean>()
     var favEvent: EventBean? = null
     val sortTypeLiveData = MutableLiveData<Int>()
+    val json = Json(configuration = JsonConfiguration.Stable.copy(strictMode = false))
     private val dataBase = AppDatabase.getDatabase(application)
     private val eventDao = dataBase.eventDao()
 
@@ -49,8 +51,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (!dir.exists()) {
             dir.mkdir()
         }
-        val gson = Gson()
-        val s = gson.toJson(eventDao.getAllInThread())
+        val s = json.stringify(EventBean.serializer().list, eventDao.getAllInThread())
         val cal = Calendar.getInstance()
         val file = File(
             myDir,
@@ -61,10 +62,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     suspend fun importFromFile(path: String): String {
-        val gson = Gson()
         val file = File(path)
         val list = file.readLines()
-        val eventList = gson.fromJson<List<EventBean>>(list[0], object : TypeToken<List<EventBean>>() {}.type)
+        val eventList = json.parse(EventBean.serializer().list, list[0])
         eventList.forEach {
             it.id = 0
             it.isFav = false

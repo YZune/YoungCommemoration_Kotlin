@@ -2,33 +2,28 @@ package com.suda.yzune.youngcommemoration.main
 
 import android.Manifest
 import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import com.google.android.material.appbar.AppBarLayout
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
 import com.chad.library.adapter.base.listener.OnItemDragListener
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
-import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
-import com.google.gson.reflect.TypeToken
+import com.google.android.material.appbar.AppBarLayout
 import com.nbsp.materialfilepicker.ui.FilePickerActivity
 import com.suda.yzune.youngcommemoration.*
 import com.suda.yzune.youngcommemoration.base_view.BaseActivity
@@ -46,6 +41,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.JsonException
+import kotlinx.serialization.list
 import okhttp3.ResponseBody
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.longSnackbar
@@ -53,6 +50,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.math.abs
 
 
 class MainActivity : BaseActivity() {
@@ -75,17 +73,15 @@ class MainActivity : BaseActivity() {
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
                 if (response!!.body() != null) {
-                    val gson = Gson()
                     try {
-                        val updateInfo = gson.fromJson<UpdateInfoBean>(
-                            response.body()!!.string(),
-                            object : TypeToken<UpdateInfoBean>() {
-                            }.type
+                        val updateInfo = viewModel.json.parse(
+                            UpdateInfoBean.serializer(),
+                            response.body()!!.string()
                         )
                         if (updateInfo.id > getVersionCode(this@MainActivity.applicationContext)) {
                             UpdateFragment.newInstance(updateInfo).show(supportFragmentManager, "update")
                         }
-                    } catch (e: JsonSyntaxException) {
+                    } catch (e: JsonException) {
 
                     }
                 }
@@ -149,8 +145,7 @@ class MainActivity : BaseActivity() {
     private fun updateFromOldVersion() {
         val eventJson = PreferenceUtils.getStringFromSP(applicationContext, "events", "")
         if (eventJson != "") {
-            val gson = Gson()
-            val oldList = gson.fromJson<List<EventOldBean>>(eventJson, object : TypeToken<List<EventOldBean>>() {}.type)
+            val oldList = viewModel.json.parse(EventOldBean.serializer().list, eventJson!!)
             val newList = arrayListOf<EventBean>()
             oldList.forEach {
                 val d = it.date.split('-')
@@ -369,8 +364,8 @@ class MainActivity : BaseActivity() {
             when (viewModel.sortTypeLiveData.value) {
                 0 -> viewModel.showList.sortBy { it.id }
                 1 -> viewModel.showList.sortBy { it.sortNum }
-                2 -> viewModel.showList.sortBy { Math.abs(it.count) }
-                3 -> viewModel.showList.sortByDescending { Math.abs(it.count) }
+                2 -> viewModel.showList.sortBy { abs(it.count) }
+                3 -> viewModel.showList.sortByDescending { abs(it.count) }
                 4 -> viewModel.showList.sortByDescending { it.id }
             }
             adapter.notifyDataSetChanged()
@@ -380,8 +375,8 @@ class MainActivity : BaseActivity() {
             when (i) {
                 0 -> viewModel.showList.sortBy { it.id }
                 1 -> viewModel.showList.sortBy { it.sortNum }
-                2 -> viewModel.showList.sortBy { Math.abs(it.count) }
-                3 -> viewModel.showList.sortByDescending { Math.abs(it.count) }
+                2 -> viewModel.showList.sortBy { abs(it.count) }
+                3 -> viewModel.showList.sortByDescending { abs(it.count) }
                 4 -> viewModel.showList.sortByDescending { it.id }
             }
             adapter.notifyDataSetChanged()

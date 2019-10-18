@@ -222,3 +222,21 @@
 -keepclassmembernames class kotlinx.** {
     volatile <fields>;
 }
+
+# for KS
+-keepattributes *Annotation*, InnerClasses
+-dontnote kotlinx.serialization.SerializationKt
+-keep,includedescriptorclasses class com.suda.yzune.**$$serializer { *; } # <-- change package name to your app's
+-keepclassmembers class com.suda.yzune.** { # <-- change package name to your app's
+    *** Companion;
+}
+-keepclasseswithmembers class com.suda.yzune.** { # <-- change package name to your app's
+    kotlinx.serialization.KSerializer serializer(...);
+}
+
+-keepclasseswithmembers public class com.suda.yzune.youngcommemoration.bean.**{
+    <fields>;
+    <methods>;
+    public *;
+    private *;
+}

@@ -9,7 +9,23 @@ import com.bumptech.glide.Priority
 import com.zhihu.matisse.engine.ImageEngine
 
 class GlideAppEngine : ImageEngine {
-    override fun loadAnimatedGifThumbnail(
+
+    override fun loadGifImage(
+        context: Context,
+        resizeX: Int,
+        resizeY: Int,
+        imageView: ImageView,
+        uri: Uri?
+    ) {
+        Glide.with(context)
+            .asGif()
+            .load(uri)
+            .override(resizeX, resizeY)
+            .priority(Priority.HIGH)
+            .into(imageView)
+    }
+
+    override fun loadGifThumbnail(
         context: Context,
         resize: Int,
         placeholder: Drawable?,
@@ -25,16 +41,14 @@ class GlideAppEngine : ImageEngine {
             .into(imageView)
     }
 
-    override fun loadAnimatedGifImage(context: Context, resizeX: Int, resizeY: Int, imageView: ImageView, uri: Uri?) {
-        Glide.with(context)
-            .asGif()
-            .load(uri)
-            .override(resizeX, resizeY)
-            .priority(Priority.HIGH)
-            .into(imageView)
-    }
 
-    override fun loadThumbnail(context: Context, resize: Int, placeholder: Drawable, imageView: ImageView, uri: Uri) {
+    override fun loadThumbnail(
+        context: Context,
+        resize: Int,
+        placeholder: Drawable,
+        imageView: ImageView,
+        uri: Uri
+    ) {
         Glide.with(context)
             .asBitmap()
             .load(uri)
@@ -44,7 +58,13 @@ class GlideAppEngine : ImageEngine {
             .into(imageView)
     }
 
-    override fun loadImage(context: Context, resizeX: Int, resizeY: Int, imageView: ImageView, uri: Uri) {
+    override fun loadImage(
+        context: Context,
+        resizeX: Int,
+        resizeY: Int,
+        imageView: ImageView,
+        uri: Uri
+    ) {
         Glide.with(context)
             .load(uri)
             .override(resizeX, resizeY)

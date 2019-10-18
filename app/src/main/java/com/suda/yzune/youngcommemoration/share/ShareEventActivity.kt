@@ -1,7 +1,6 @@
 package com.suda.yzune.youngcommemoration.share
 
 import android.Manifest
-import androidx.lifecycle.ViewModelProviders
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -9,14 +8,15 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
@@ -214,7 +214,7 @@ class ShareEventActivity : BaseTitleActivity() {
                 }
             }.view
             rv_events.layoutManager =
-                androidx.recyclerview.widget.LinearLayoutManager(this@ShareEventActivity)
+                LinearLayoutManager(this@ShareEventActivity)
             rv_events.adapter = adapter
         }
     }
