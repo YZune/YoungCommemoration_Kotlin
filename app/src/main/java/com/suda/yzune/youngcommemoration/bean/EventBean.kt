@@ -20,9 +20,9 @@ data class EventBean(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var content: String = "",
-    var year: Int = 2019,
+    var year: Int = 0,
     var month: Int = 0, //注意1月对应的值为0
-    var day: Int = 1,
+    var day: Int = 0,
     var type: Int = 0,
     var path: String = "",
     var isFav: Boolean = false,
